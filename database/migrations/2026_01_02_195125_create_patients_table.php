@@ -13,6 +13,14 @@ return new class extends Migration
     {
         Schema::create('patients', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('user_id')->constrained()->onDelete('cascade'); // Link to Users table
+            $table->string('mobile_number', 15);
+            $table->string('blood_group', 5);
+            $table->date('dob');
+            $table->text('address');
+            $table->text('medical_history')->nullable();
+            $table->string('status')->default('Admitted'); // Admitted, Discharged, etc.
+            $table->date('last_visited_date')->nullable();
             $table->timestamps();
         });
     }
