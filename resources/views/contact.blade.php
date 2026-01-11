@@ -45,7 +45,7 @@
                         <div class="mb-3">
                             <label for="email" class="form-label">Email Address</label>
                             <input type="email" class="form-control @error('email') is-invalid @enderror" 
-                                   id="email" name="email" value="{{ old('email') }}" required>
+                                   id="email" name="email" value="{{ old('email') }}" placeholder= "e.g. mediplus@gmail.com" required>
                             @error('email')
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
@@ -54,10 +54,10 @@
 
                         <div class="mb-3">
                             <label for="mobile" class="form-label">Mobile Number</label>
-                            <input type="tel" class="form-control @error('mobile_number') is-invalid @enderror" 
+                            <input type="number" class="form-control @error('mobile_number') is-invalid @enderror" 
                                    id="mobile" name="mobile_number" value="{{ old('mobile_number') }}" 
                                    pattern="[0-9]{10}" maxlength="10" inputmode="numeric" 
-                                   title="Please enter a 10-digit mobile number" placeholder="e.g. 9876543210" required>
+                                   title="Please enter a 10-digit mobile number" placeholder="e.g. 7249522138" required>
                             @error('mobile_number')
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
@@ -65,7 +65,7 @@
 
                         <div class="mb-3">
                             <label for="message" class="form-label">Reason for joining (Optional)</label>
-                            <textarea class="form-control" id="message" name="message" rows="3">{{ old('message') }}</textarea>
+                            <textarea class="form-control" id="message" name="message" rows="3" placeholder="e.g. I had severe obesity & constipation...">{{ old('message') }}</textarea>
                         </div>
 
                         <div class="d-grid">
