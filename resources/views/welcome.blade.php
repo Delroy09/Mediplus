@@ -31,7 +31,7 @@
                 <div class="card-body text-center">
                     <div class="feature-icon">🏥</div>
                     <h5 class="card-title">Patient Portal</h5>
-                    <p class="card-text">View your admission status, assigned doctor, and update your contact details securely.</p>
+                    <p class="card-text"><b>View</b> your admission status, assigned doctor, and <b>update</b> your contact details <b>securely.</b></p>
                 </div>
             </div>
         </div>
@@ -41,7 +41,7 @@
                 <div class="card-body text-center">
                     <div class="feature-icon">👨‍⚕️</div>
                     <h5 class="card-title">Doctor Dashboard</h5>
-                    <p class="card-text">Manage assigned patients, track discharge status, and view medical history in one place.</p>
+                    <p class="card-text">Manage assigned patients, track discharge status, and view medical history in <b>one place.</b></p>
                 </div>
             </div>
         </div>
@@ -51,7 +51,7 @@
                 <div class="card-body text-center">
                     <div class="feature-icon">🛡️</div>
                     <h5 class="card-title">Secure Admin</h5>
-                    <p class="card-text">IT Department controlled access ensures only verified users can access sensitive medical data.</p>
+                    <p class="card-text">IT Department controlled access ensures only <b>verified</b> users can access sensitive medical data.</p>
                 </div>
             </div>
         </div>
