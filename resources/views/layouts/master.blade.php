@@ -27,7 +27,7 @@
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item"><a class="nav-link" href="{{ url('/') }}">Home</a></li>
                     <li class="nav-item"><a class="nav-link" href="#features">Features</a></li>
-                    <li class="nav-item"><a class="nav-link" href="{{ url('/contact') }}">Contact / Request Account</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{{ url('/contact') }}">Apply Now</a></li>
                     
                     @if (Route::has('login'))
                         @auth
