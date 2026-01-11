@@ -7,12 +7,12 @@
 <section class="hero-section text-center">
     <div class="container">
         <h1 class="display-4 fw-bold">Welcome to Medi+</h1>
-        <p class="lead text-muted">Advanced Patient Management System for the Modern Era.</p>
-        <p class="mb-4">Streamlining communication between Doctors, Patients, and Administration.</p>
+        <p class="lead text-muted">Advanced Patient Management System(APMS)</p>
+        <p class="mb-4">Bridging gap between Doctors, Patients, & Administration.</p>
         
         <div class="d-flex justify-content-center gap-3">
-            <a href="{{ url('/contact') }}" class="btn btn-primary btn-lg">Request an Account</a>
-            <a href="{{ route('login') }}" class="btn btn-outline-secondary btn-lg">Staff Login</a>
+            <a href="{{ url('/contact') }}" class="btn btn-primary btn-lg">Apply Now</a>
+            <!-- <a href="{{ route('login') }}" class="btn btn-outline-secondary btn-lg">Staff Login</a> -->
         </div>
     </div>
 </section>

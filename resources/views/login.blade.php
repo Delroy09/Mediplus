@@ -46,7 +46,7 @@
                         </div>
 
                         <div class="text-center mt-3">
-                            <a href="{{ url('/contact') }}" class="text-decoration-none">Don't have an account? Request one here.</a>
+                            <a href="{{ url('/contact') }}" class="text-decoration-none">Don't have an account? Apply for one here</a>
                         </div>
                     </form>
                 </div>
