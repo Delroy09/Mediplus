@@ -54,8 +54,10 @@
 
                         <div class="mb-3">
                             <label for="mobile" class="form-label">Mobile Number</label>
-                            <input type="text" class="form-control @error('mobile_number') is-invalid @enderror" 
-                                   id="mobile" name="mobile_number" value="{{ old('mobile_number') }}" required>
+                            <input type="tel" class="form-control @error('mobile_number') is-invalid @enderror" 
+                                   id="mobile" name="mobile_number" value="{{ old('mobile_number') }}" 
+                                   pattern="[0-9]{10}" maxlength="10" inputmode="numeric" 
+                                   title="Please enter a 10-digit mobile number" placeholder="e.g. 9876543210" required>
                             @error('mobile_number')
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror

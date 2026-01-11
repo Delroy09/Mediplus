@@ -7,71 +7,29 @@ use Illuminate\Http\Request;
 class ContactController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Show the contact/request account form.
      */
-    public function index()
-    {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(Patient $patient)
+    public function show()
     {
         return view('contact');
     }
 
     /**
-     * Show the form for editing the specified resource.
+     * Handle the contact form submission.
      */
-    public function submit(Patient $patient)
+    public function submit(Request $request)
     {
-        $patient->validate([
-
-        'name'=>'required',
-        'email'=>'required|email',
-        'mobile'=>'required',
-
-
-
+        // 1. Validate the incoming data
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|max:255',
+            'mobile_number' => 'required|digits:10',
+            'message' => 'nullable|string'
         ]);
 
-
-        AccountRequest::create($request->all());
-
-        return back()->with('success','Form Submit Success, the IT department will be working on it!');
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, Patient $patient)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Patient $patient)
-    {
-        //
+        // 2. TODO: Save to 'account_requests' table.
+        // For now, we simulate success so the frontend can be tested.
+        
+        return back()->with('success', 'Your request has been submitted successfully! IT Admin will review it shortly.');
     }
 }
