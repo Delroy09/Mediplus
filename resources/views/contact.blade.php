@@ -19,26 +19,51 @@
                         </div>
                     @endif
 
+                    @if ($errors->any())
+                        <div class="alert alert-danger">
+                            <ul class="mb-0">
+                                @foreach ($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endif
+
                     <form method="POST" action="{{ route('contact.submit') }}">
-                        @csrf <div class="mb-3">
+                        @csrf
+
+                        <div class="mb-3">
                             <label for="name" class="form-label">Full Name</label>
-                            <input type="text" class="form-control" id="name" name="name" required>
+                            <input type="text" class="form-control @error('name') is-invalid @enderror" 
+                                   id="name" name="name" value="{{ old('name') }}" required>
+                            
+                            @error('name')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
                         </div>
 
                         <div class="mb-3">
                             <label for="email" class="form-label">Email Address</label>
-                            <input type="email" class="form-control" id="email" name="email" required>
+                            <input type="email" class="form-control @error('email') is-invalid @enderror" 
+                                   id="email" name="email" value="{{ old('email') }}" required>
+                            @error('email')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
                             <div class="form-text">We will send your login credentials here.</div>
                         </div>
 
                         <div class="mb-3">
                             <label for="mobile" class="form-label">Mobile Number</label>
-                            <input type="text" class="form-control" id="mobile" name="mobile_number" required>
+                            <input type="text" class="form-control @error('mobile_number') is-invalid @enderror" 
+                                   id="mobile" name="mobile_number" value="{{ old('mobile_number') }}" required>
+                            @error('mobile_number')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
                         </div>
 
                         <div class="mb-3">
                             <label for="message" class="form-label">Reason for joining (Optional)</label>
-                            <textarea class="form-control" id="message" name="message" rows="3"></textarea>
+                            <textarea class="form-control" id="message" name="message" rows="3">{{ old('message') }}</textarea>
                         </div>
 
                         <div class="d-grid">
