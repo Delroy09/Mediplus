@@ -9,12 +9,13 @@
 
 ##  Project Structure
 - 
-esources/views/layouts/master.blade.php: Main UI Theme (Bootstrap CDN).
+Resources/views/layouts/master.blade.php: Main UI Theme (Bootstrap CDN).
 - 
-outes/web.php: Application Routing.
-- pp/Http/Controllers/ContactController.php: Handles Account Requests.
+Routes/web.php: Application Routing.
+- App/Http/Controllers/ContactController.php: Handles Account Requests.
 
 ##  Notes for Grading
 - **Frontend:** bootstrap 5 is used via CDN (Internet connection required).
 - **Accounts:** New users must request an account via the Contact page.
+
 
