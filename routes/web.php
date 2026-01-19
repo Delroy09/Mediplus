@@ -1,8 +1,9 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-// FIX: Import the controller so PHP knows where to find it
 use App\Http\Controllers\ContactController;
+use App\Http\Controllers\PatientController;
+use App\Http\Controllers\DoctorController;
 
 /*
 |--------------------------------------------------------------------------
@@ -10,29 +11,56 @@ use App\Http\Controllers\ContactController;
 |--------------------------------------------------------------------------
 */
 
-// FIX: Return 'welcome' (the content), not 'layouts.master' (the skeleton)
+// Public Routes
 Route::get('/', function () {
     return view('welcome');
 })->name('home');
 
-// FIX: Contact Routes
-// The GET route shows the form
+// Contact Routes
 Route::get('/contact', [ContactController::class, 'show'])->name('contact.show');
-// The POST route handles the submission (Fixes the "405 Method Not Allowed" error)
 Route::post('/contact', [ContactController::class, 'submit'])->name('contact.submit');
 
-// FIX: Login Routes (Placeholder)
-// These are required because your views use {{ route('login') }}
+// Login Routes
 Route::get('/login', function () {
-    return view('login'); // Matches resources/views/login.blade.php
+    return view('login');
 })->name('login');
 
 Route::post('/login', function () {
+    // TODO: Implement authentication logic
     return "Login Logic Not Implemented Yet";
 });
 
-// FIX: Dashboard Redirect (Placeholder)
+Route::post('/logout', function () {
+    // TODO: Implement logout logic
+    // Auth::logout();
+    return redirect()->route('login');
+})->name('logout');
+
+// Patient Routes (Protected - will add middleware later)
+Route::prefix('patient')->name('patient.')->group(function () {
+    Route::get('/dashboard', [PatientController::class, 'dashboard'])->name('dashboard');
+    Route::get('/profile', [PatientController::class, 'profile'])->name('profile');
+    Route::post('/profile/update', [PatientController::class, 'updateProfile'])->name('profile.update');
+    Route::get('/schedule', [PatientController::class, 'schedule'])->name('schedule');
+    Route::get('/manage', [PatientController::class, 'manage'])->name('manage');
+    Route::post('/request-deletion', [PatientController::class, 'requestDeletion'])->name('request-deletion');
+});
+
+// Doctor Routes (Protected - will add middleware later)
+Route::prefix('doctor')->name('doctor.')->group(function () {
+    Route::get('/dashboard', [DoctorController::class, 'dashboard'])->name('dashboard');
+    Route::get('/patients', [DoctorController::class, 'patients'])->name('patients');
+    Route::get('/patient/{id}', [DoctorController::class, 'viewPatient'])->name('patient.view');
+    Route::get('/patient/{id}/update-status', [DoctorController::class, 'updateStatusForm'])->name('patient.update-status');
+    Route::post('/patient/{id}/update-status', [DoctorController::class, 'updateStatus'])->name('patient.update-status.submit');
+    Route::get('/patient/{id}/add-record', [DoctorController::class, 'createMedicalRecord'])->name('patient.add-record');
+    Route::post('/patient/{id}/add-record', [DoctorController::class, 'storeMedicalRecord'])->name('patient.store-record');
+    Route::get('/schedule', [DoctorController::class, 'schedule'])->name('schedule');
+    Route::get('/profile', [DoctorController::class, 'profile'])->name('profile');
+});
+
+// Legacy dashboard redirect (for backward compatibility)
 Route::get('/dashboard', function () {
-    // Return the patient dashboard view for testing purposes
-    return view('patient.dashboard');
+    // TODO: Redirect based on user role after authentication
+    return redirect()->route('patient.dashboard');
 })->name('dashboard');
