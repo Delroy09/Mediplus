@@ -6,17 +6,16 @@
 <div class="container my-5">
     <div class="row justify-content-center mb-5">
         <div class="col-lg-8 text-center">
-            <span class="badge bg-primary bg-gradient px-3 py-2 rounded-pill mb-3">Get Started</span>
-            <h1 class="display-5 fw-bold mb-3">Request Your Account</h1>
-            <p class="lead text-muted">Fill out the form below and our IT team will review your application</p>
+            <h1 class="fw-bold mb-3" style="font-size: 2.5rem;">Request Your Account</h1>
+            <p style="color: var(--text-secondary); font-size: 1.1rem;">Fill out the form below and our IT team will review your application</p>
         </div>
     </div>
 
     <div class="row justify-content-center">
         <div class="col-lg-8">
-            <div class="card shadow-lg border-0 mb-5">
-                <div class="card-header bg-gradient text-white py-3" style="background: linear-gradient(135deg, #0d6efd 0%, #0dcaf0 100%);">
-                    <h4 class="mb-0 fw-bold">📋 Application Form</h4>
+            <div class="card mb-5">
+                <div class="card-header bg-white py-4" style="border-bottom: 1px solid var(--border-color);">
+                    <h4 class="mb-0 fw-bold">Application Form</h4>
                 </div>
                 <div class="card-body">
 
@@ -37,46 +36,48 @@
                     </div>
                     @endif
 
-                    <form method="POST" action="{{ route('contact.submit') }}">
+                    <form method="POST" action="{{ route('contact.submit') }}" novalidate>
                         @csrf
 
-                        <div class="mb-3">
-                            <label for="name" class="form-label">Full Name</label>
+                        <div class="mb-4">
+                            <label for="name" class="form-label">Full Name <span style="color: #DC2626;">*</span></label>
                             <input type="text" class="form-control @error('name') is-invalid @enderror"
-                                id="name" name="name" value="{{ old('name') }}" required>
+                                id="name" name="name" value="{{ old('name') }}" required aria-required="true" aria-describedby="nameHelp">
 
                             @error('name')
                             <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
                         </div>
 
-                        <div class="mb-3">
-                            <label for="email" class="form-label">Email Address</label>
+                        <div class="mb-4">
+                            <label for="email" class="form-label">Email Address <span style="color: #DC2626;">*</span></label>
                             <input type="email" class="form-control @error('email') is-invalid @enderror"
-                                id="email" name="email" value="{{ old('email') }}" placeholder="e.g. mediplus@gmail.com" required>
+                                id="email" name="email" value="{{ old('email') }}" placeholder="e.g. mediplus@gmail.com" required aria-required="true" aria-describedby="emailHelp">
                             @error('email')
-                            <div class="invalid-feedback">{{ $message }}</div>
+                            <div class="invalid-feedback" role="alert">{{ $message }}</div>
                             @enderror
-                            <div class="form-text">We will send your login credentials here.</div>
+                            <div class="form-text" id="emailHelp">We will send your login credentials here.</div>
                         </div>
 
-                        <div class="mb-3">
-                            <label for="mobile" class="form-label">Mobile Number</label>
-                            <input type="number" class="form-control @error('mobile_number') is-invalid @enderror"
+                        <div class="mb-4">
+                            <label for="mobile" class="form-label">Mobile Number <span style="color: #DC2626;">*</span></label>
+                            <input type="tel" class="form-control @error('mobile_number') is-invalid @enderror"
                                 id="mobile" name="mobile_number" value="{{ old('mobile_number') }}"
                                 pattern="[0-9]{10}" maxlength="10" inputmode="numeric"
-                                title="Please enter a 10-digit mobile number" placeholder="e.g. 7249522138" required>
+                                title="Please enter a 10-digit mobile number" placeholder="e.g. 7249522138" required aria-required="true" aria-describedby="mobileHelp">
                             @error('mobile_number')
-                            <div class="invalid-feedback">{{ $message }}</div>
+                            <div class="invalid-feedback" role="alert">{{ $message }}</div>
                             @enderror
+                            <div class="form-text" id="mobileHelp">10-digit mobile number without spaces or dashes.</div>
                         </div>
 
-                        <div class="mb-3">
-                            <label for="message" class="form-label">Reason for joining (Optional)</label>
-                            <textarea class="form-control" id="message" name="message" rows="3" placeholder="e.g. I had severe obesity & constipation...">{{ old('message') }}</textarea>
+                        <div class="mb-4">
+                            <label for="message" class="form-label">Reason for joining <span style="color: var(--text-secondary); font-weight: 400;">(Optional)</span></label>
+                            <textarea class="form-control" id="message" name="message" rows="4" placeholder="Briefly describe why you need an account..." aria-describedby="messageHelp">{{ old('message') }}</textarea>
+                            <div class="form-text" id="messageHelp">This helps us process your request faster.</div>
                         </div>
 
-                        <div class="d-grid">
+                        <div class="d-grid mt-4">
                             <button type="submit" class="btn btn-primary btn-lg">Submit Application</button>
                         </div>
                     </form>
@@ -84,15 +85,15 @@
             </div>
 
             <!-- FAQ Section -->
-            <div class="card shadow-lg border-0 mt-4">
-                <div class="card-header bg-light py-3">
-                    <h4 class="mb-0 fw-bold text-center">❓ Frequently Asked Questions</h4>
+            <div class="card mt-4">
+                <div class="card-header bg-white py-4" style="border-bottom: 1px solid var(--border-color);">
+                    <h4 class="mb-0 fw-bold">Frequently Asked Questions</h4>
                 </div>
                 <div class="card-body p-4">
                     <div class="accordion accordion-flush" id="faqAccordion">
-                        <div class="accordion-item border-0 mb-3">
+                        <div class="accordion-item mb-3">
                             <h2 class="accordion-header">
-                                <button class="accordion-button collapsed shadow-sm" type="button" data-bs-toggle="collapse" data-bs-target="#faq1">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq1">
                                     <strong>How long does the approval process take?</strong>
                                 </button>
                             </h2>
@@ -103,9 +104,9 @@
                             </div>
                         </div>
 
-                        <div class="accordion-item border-0 mb-3">
+                        <div class="accordion-item mb-3">
                             <h2 class="accordion-header">
-                                <button class="accordion-button collapsed shadow-sm" type="button" data-bs-toggle="collapse" data-bs-target="#faq2">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq2">
                                     <strong>What information do I need to provide?</strong>
                                 </button>
                             </h2>
@@ -116,9 +117,9 @@
                             </div>
                         </div>
 
-                        <div class="accordion-item border-0 mb-3">
+                        <div class="accordion-item mb-3">
                             <h2 class="accordion-header">
-                                <button class="accordion-button collapsed shadow-sm" type="button" data-bs-toggle="collapse" data-bs-target="#faq3">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq3">
                                     <strong>Can I request an account for someone else?</strong>
                                 </button>
                             </h2>
@@ -129,9 +130,9 @@
                             </div>
                         </div>
 
-                        <div class="accordion-item border-0">
+                        <div class="accordion-item">
                             <h2 class="accordion-header">
-                                <button class="accordion-button collapsed shadow-sm" type="button" data-bs-toggle="collapse" data-bs-target="#faq4">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq4">
                                     <strong>Is my personal information secure?</strong>
                                 </button>
                             </h2>

@@ -7,135 +7,278 @@
     <title>Medi+ | @yield('title')</title>
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
-
+    <link rel="stylesheet" href="global.css">
     <style>
-        /* Modern Medical Theme */
+        /* Flat Design - Inspired by Stripe, Linear */
         :root {
-            --primary-color: #0d6efd;
-            --primary-dark: #0a58ca;
-            --secondary-color: #6c757d;
-            --gradient-primary: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            --gradient-blue: linear-gradient(135deg, #0d6efd 0%, #0dcaf0 100%);
+            --primary: #0066FF;
+            --primary-dark: #0052CC;
+            --text-primary: #1a202c;
+            --text-secondary: #718096;
+            --bg-gray: #F7FAFC;
+            --border-color: #E2E8F0;
         }
 
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Inter', sans-serif;
+            color: var(--text-primary);
+            line-height: 1.7;
+            font-size: 16px;
+        }
+
+        /* Improved readability */
+        p {
+            line-height: 1.8;
+            margin-bottom: 1rem;
+        }
+
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6 {
+            line-height: 1.3;
+            margin-bottom: 1rem;
         }
 
         .navbar {
-            backdrop-filter: blur(10px);
-            background: rgba(255, 255, 255, 0.95) !important;
-            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+            background: #ffffff !important;
+            border-bottom: 1px solid var(--border-color);
+            padding: 1rem 0;
         }
 
         .navbar-brand {
             font-weight: 700;
             font-size: 1.5rem;
-            background: var(--gradient-blue);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
+            color: var(--primary) !important;
+            letter-spacing: -0.5px;
         }
 
         .nav-link {
             font-weight: 500;
-            transition: all 0.3s ease;
-            position: relative;
+            color: var(--text-secondary) !important;
+            transition: color 0.2s;
+            font-size: 1rem;
+            padding: 0.5rem 1rem !important;
+            min-height: 44px;
+            display: flex;
+            align-items: center;
         }
 
-        .nav-link:hover {
-            color: var(--primary-color) !important;
-            transform: translateY(-2px);
+        .nav-link:hover,
+        .nav-link:focus {
+            color: var(--text-primary) !important;
+            outline: 2px solid transparent;
+        }
+
+        .nav-link:focus-visible {
+            outline: 2px solid var(--primary);
+            outline-offset: 2px;
         }
 
         .hero-section {
-            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-            padding: 100px 0;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .hero-section::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: url('data:image/svg+xml,<svg width="100" height="100" xmlns="http://www.w3.org/2000/svg"><circle cx="50" cy="50" r="2" fill="rgba(13,110,253,0.1)"/></svg>');
-            opacity: 0.4;
+            background: #ffffff;
+            padding: 120px 0 80px;
         }
 
         .feature-icon {
-            font-size: 3rem;
+            font-size: 2.5rem;
             margin-bottom: 1rem;
-            transition: transform 0.3s ease;
         }
 
         .card {
-            transition: all 0.3s ease;
-            border-radius: 15px;
-            overflow: hidden;
+            border: 2px solid var(--border-color);
+            border-radius: 12px;
         }
 
-        .card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1) !important;
+        .card-body {
+            padding: 2rem;
         }
 
-        .card:hover .feature-icon {
-            transform: scale(1.2) rotate(5deg);
+        .card-header {
+            padding: 1.5rem 2rem;
         }
 
         .btn {
-            border-radius: 50px;
-            padding: 12px 30px;
+            border-radius: 8px;
+            padding: 14px 28px;
             font-weight: 600;
-            transition: all 0.3s ease;
+            font-size: 1rem;
+            transition: all 0.2s;
+            min-height: 48px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
         }
 
         .btn-primary {
-            background: var(--gradient-blue);
+            background: var(--primary);
             border: none;
         }
 
-        .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 20px rgba(13, 110, 253, 0.3);
+        .btn-primary:hover,
+        .btn-primary:focus {
+            background: var(--primary-dark);
+        }
+
+        .btn-primary:focus-visible {
+            outline: 3px solid rgba(0, 102, 255, 0.4);
+            outline-offset: 2px;
+        }
+
+        .btn-outline-primary {
+            border-color: var(--border-color);
+            color: var(--text-primary);
         }
 
         .btn-outline-primary:hover {
-            background: var(--gradient-blue);
-            border: none;
+            background: var(--bg-gray);
+            border-color: var(--text-secondary);
+            color: var(--text-primary);
         }
 
         footer {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: var(--text-primary);
             color: white;
+        }
+
+        .form-control {
+            border: 2px solid var(--border-color);
+            border-radius: 8px;
+            padding: 0.875rem 1rem;
+            font-size: 1rem;
+            line-height: 1.5;
+            min-height: 48px;
+            transition: border-color 0.2s, box-shadow 0.2s;
         }
 
         .form-control:focus {
-            border-color: var(--primary-color);
-            box-shadow: 0 0 0 0.2rem rgba(13, 110, 253, 0.15);
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(0, 102, 255, 0.15);
+            outline: none;
+        }
+
+        .form-control::placeholder {
+            color: #A0AEC0;
+        }
+
+        .form-label {
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--text-primary);
+            font-size: 0.95rem;
+        }
+
+        .form-text {
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+            margin-top: 0.375rem;
+        }
+
+        textarea.form-control {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        .badge {
+            font-weight: 600;
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            font-size: 0.875rem;
+        }
+
+        .alert {
+            border-radius: 8px;
+            border: 2px solid;
+            padding: 1rem 1.25rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .alert-success {
+            background: #F0FDF4;
+            border-color: #86EFAC;
+            color: #166534;
+        }
+
+        .alert-danger {
+            background: #FEF2F2;
+            border-color: #FCA5A5;
+            color: #991B1B;
+        }
+
+        /* Skip to main content for accessibility */
+        .skip-to-main {
+            position: absolute;
+            top: -40px;
+            left: 0;
+            background: var(--primary);
+            color: white;
+            padding: 8px 16px;
+            text-decoration: none;
+            border-radius: 0 0 8px 0;
+        }
+
+        .skip-to-main:focus {
+            top: 0;
+        }
+
+        /* Focus styles for keyboard navigation */
+        *:focus-visible {
+            outline: 2px solid var(--primary);
+            outline-offset: 2px;
+        }
+
+        .accordion-button {
+            padding: 1rem 1.5rem;
+            font-size: 1rem;
+            min-height: 56px;
+            border: 1px solid var(--border-color);
+            border-radius: 8px !important;
+            background: white;
         }
 
         .accordion-button:not(.collapsed) {
-            background: var(--gradient-blue);
-            color: white;
+            background: var(--bg-gray);
+            color: var(--text-primary);
+            font-weight: 600;
+            border-color: var(--border-color);
         }
 
         .accordion-button:focus {
-            box-shadow: none;
+            box-shadow: 0 0 0 3px rgba(0, 102, 255, 0.15);
+            border-color: var(--primary);
+        }
+
+        .accordion-item {
+            border: none !important;
+            margin-bottom: 0.75rem;
+        }
+
+        .accordion-body {
+            padding: 1.5rem;
+            font-size: 1rem;
+            line-height: 1.8;
+            color: var(--text-secondary);
+            background: white;
+            border: 1px solid var(--border-color);
+            border-top: none;
+            border-radius: 0 0 8px 8px;
+        }
+
+        .accordion-button.collapsed {
+            border-radius: 8px !important;
         }
     </style>
 </head>
 
 <body>
+    <a href="#main-content" class="skip-to-main">Skip to main content</a>
 
-    <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
+    <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm" role="navigation" aria-label="Main navigation">
         <div class="container">
-            <a class="navbar-brand" href="{{ url('/') }}">Medi+</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <a class="navbar-brand" href="{{ url('/') }}" aria-label="Medi+ Home">Medi+</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
@@ -158,10 +301,10 @@
 
     @yield('content')
 
-    <footer class="text-center text-lg-start mt-5">
-        <div class="text-center p-4" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white;">
-            <p class="mb-0">© 2026 Medi+ Patient Management System | <strong>CA-2 Project</strong></p>
-            <p class="mb-0 small mt-2 opacity-75">Built with ❤️ by Delroy Pires</p>
+    <footer class="text-center mt-5">
+        <div class="text-center p-4" style="background: #1a202c; color: rgba(255,255,255,0.9);">
+            <p class="mb-0">© 2026 Medi+ Patient Management System</p>
+            <p class="mb-0 small mt-1" style="opacity: 0.7;">Built by Delroy Pires</p>
         </div>
     </footer>
 
