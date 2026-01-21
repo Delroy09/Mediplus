@@ -13,6 +13,15 @@ return new class extends Migration
     {
         Schema::create('account_requests', function (Blueprint $table) {
             $table->id();
+            $table->string('name');
+            $table->string('email');
+            $table->string('mobile_number', 10);
+            $table->text('message')->nullable();
+            $table->enum('status', ['pending', 'approved', 'rejected'])->default('pending');
+            $table->enum('requested_role', ['patient', 'doctor'])->default('patient');
+            $table->foreignId('reviewed_by')->nullable()->constrained('users')->onDelete('set null');
+            $table->timestamp('reviewed_at')->nullable();
+            $table->text('rejection_reason')->nullable();
             $table->timestamps();
         });
     }

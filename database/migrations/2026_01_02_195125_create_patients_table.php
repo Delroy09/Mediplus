@@ -13,14 +13,17 @@ return new class extends Migration
     {
         Schema::create('patients', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained()->onDelete('cascade'); // Link to Users table
+            $table->foreignId('user_id')->unique()->constrained()->onDelete('cascade'); // 1:1 with Users
             $table->string('mobile_number', 15);
-            $table->string('blood_group', 5);
+            $table->string('blood_group', 5); // A+, A-, B+, B-, AB+, AB-, O+, O-
             $table->date('dob');
+            $table->enum('gender', ['male', 'female', 'other']);
             $table->text('address');
-            $table->text('medical_history')->nullable();
-            $table->string('status')->default('Admitted'); // Admitted, Discharged, etc.
+            $table->datetime('admission_date')->nullable();
+            $table->string('status', 50)->default('Admitted'); // Admitted, Surgery, Discharged
             $table->date('last_visited_date')->nullable();
+            $table->string('emergency_contact_name')->nullable();
+            $table->string('emergency_contact_number', 15)->nullable();
             $table->timestamps();
         });
     }
