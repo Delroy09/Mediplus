@@ -1,48 +1,19 @@
 @extends('layouts.dashboard-layout')
 
-@section('title', 'Doctor Dashboard')
+@section('title', 'My Patients')
 
-@section('page-title', 'Dashboard')
+@section('page-title', 'My Patients')
 
 @section('sidebar-menu')
-<a href="{{ route('doctor.dashboard') }}" class="active">Dashboard</a>
-<a href="{{ route('doctor.patients') }}">My Patients</a>
+<a href="{{ route('doctor.dashboard') }}">Dashboard</a>
+<a href="{{ route('doctor.patients') }}" class="active">My Patients</a>
 <a href="{{ route('doctor.schedule') }}">My Schedule</a>
 <a href="{{ route('doctor.profile') }}">Profile</a>
 @endsection
 
 @section('content')
 <div class="content-box">
-    <h5 style="text-align: center; margin-bottom: 25px; font-weight: 600;">Welcome, Dr. {{ $user->name ?? 'Doctor Name' }}</h5>
-
-    <div class="row text-center mb-4">
-        <div class="col-md-3">
-            <div class="p-3" style="background: white; border-radius: 6px; margin: 5px;">
-                <h3 style="color: #2b5797; margin-bottom: 5px;">{{ $stats['active_patients'] ?? 12 }}</h3>
-                <small style="color: #666;">Active Patients</small>
-            </div>
-        </div>
-        <div class="col-md-3">
-            <div class="p-3" style="background: white; border-radius: 6px; margin: 5px;">
-                <h3 style="color: #28a745; margin-bottom: 5px;">{{ $stats['appointments_today'] ?? 5 }}</h3>
-                <small style="color: #666;">Appointments Today</small>
-            </div>
-        </div>
-        <div class="col-md-3">
-            <div class="p-3" style="background: white; border-radius: 6px; margin: 5px;">
-                <h3 style="color: #ffc107; margin-bottom: 5px;">{{ $stats['pending_updates'] ?? 3 }}</h3>
-                <small style="color: #666;">Pending Updates</small>
-            </div>
-        </div>
-        <div class="col-md-3">
-            <div class="p-3" style="background: white; border-radius: 6px; margin: 5px;">
-                <h3 style="color: #17a2b8; margin-bottom: 5px;">{{ $stats['total_records'] ?? 47 }}</h3>
-                <small style="color: #666;">Total Records</small>
-            </div>
-        </div>
-    </div>
-
-    <h5 style="margin-bottom: 20px; font-weight: 600;">Assigned Patients</h5>
+    <h5 style="margin-bottom: 20px; font-weight: 600;">All Assigned Patients</h5>
 
     <div class="table-responsive">
         <table class="table table-hover bg-white" style="border-radius: 8px; overflow: hidden;">
@@ -50,17 +21,20 @@
                 <tr>
                     <th>Patient Name</th>
                     <th>Age</th>
+                    <th>Gender</th>
                     <th>Blood Group</th>
                     <th>Status</th>
                     <th>Last Visit</th>
+                    <th>Mobile</th>
                     <th>Actions</th>
                 </tr>
             </thead>
             <tbody>
                 @forelse($patients ?? [] as $patient)
                 <tr>
-                    <td>{{ $patient->user->name ?? 'Patient Name' }}</td>
+                    <td>{{ $patient->user->name ?? 'N/A' }}</td>
                     <td>{{ isset($patient->dob) ? \Carbon\Carbon::parse($patient->dob)->age : 'N/A' }}</td>
+                    <td>{{ ucfirst($patient->gender ?? 'N/A') }}</td>
                     <td>{{ $patient->blood_group ?? 'N/A' }}</td>
                     <td>
                         <span class="badge 
@@ -72,6 +46,7 @@
                         </span>
                     </td>
                     <td>{{ $patient->last_visited_date ?? 'N/A' }}</td>
+                    <td>{{ $patient->mobile_number ?? 'N/A' }}</td>
                     <td>
                         <a href="{{ route('doctor.patient.view', $patient->id) }}" class="btn btn-sm" style="background: #2b5797; color: white;">View</a>
                         <a href="{{ route('doctor.patient.update-status', $patient->id) }}" class="btn btn-sm btn-warning">Update</a>
@@ -79,7 +54,7 @@
                 </tr>
                 @empty
                 <tr>
-                    <td colspan="6" class="text-center py-4" style="color: #666;">
+                    <td colspan="8" class="text-center py-4" style="color: #666;">
                         <p class="mb-2">No patients assigned yet.</p>
                         <small>Please contact the IT administrator for patient assignments.</small>
                     </td>
@@ -99,6 +74,7 @@
     .table tbody td {
         padding: 0.875rem 1rem;
         vertical-align: middle;
+        font-size: 14px;
     }
 
     .table-hover tbody tr:hover {

@@ -9,123 +9,116 @@
     <link rel="stylesheet" href="{{ asset('global.css') }}">
     <style>
         body {
-            background: #E8F1F8;
-            min-height: 100vh;
+            background-color: #9fc5e8;
+            font-family: Arial, sans-serif;
+            margin: 0;
         }
 
         .dashboard-sidebar {
-            background: linear-gradient(180deg, #4A7BA7 0%, #3A5F7D 100%);
+            background-color: #2b5797;
             min-height: 100vh;
             padding: 0;
             position: fixed;
             left: 0;
             top: 0;
-            width: 200px;
+            width: 220px;
             color: white;
         }
 
         .sidebar-brand {
-            padding: 1.5rem 1rem;
-            background: rgba(255, 255, 255, 0.1);
+            background-color: #ffffff;
+            margin: 0;
+            padding: 12px;
             text-align: center;
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: white;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+            font-weight: bold;
+            border-radius: 6px;
+            color: #000;
         }
 
         .sidebar-nav {
-            padding: 1rem 0;
+            padding: 0;
         }
 
         .sidebar-nav a {
-            display: block;
-            padding: 0.875rem 1.5rem;
-            color: white;
+            color: #ffffff;
             text-decoration: none;
-            transition: all 0.2s;
-            border-bottom: 2px solid transparent;
-            margin-bottom: 0.5rem;
+            display: block;
+            padding: 12px;
+            margin: 5px 10px;
+            border-radius: 6px;
+            font-size: 14px;
+            transition: background-color 0.2s;
         }
 
-        .sidebar-nav a:hover {
-            background: rgba(255, 255, 255, 0.1);
-        }
-
+        .sidebar-nav a:hover,
         .sidebar-nav a.active {
-            border-bottom: 2px solid white;
-            background: rgba(255, 255, 255, 0.15);
+            background-color: #1d3f73;
         }
 
         .sidebar-logout {
             position: absolute;
-            bottom: 2rem;
-            left: 50%;
-            transform: translateX(-50%);
+            bottom: 0;
+            width: 100%;
         }
 
         .sidebar-logout .btn {
-            background: rgba(255, 255, 255, 0.2);
-            color: white;
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            padding: 0.5rem 2rem;
-            border-radius: 8px;
-        }
-
-        .sidebar-logout .btn:hover {
-            background: rgba(255, 255, 255, 0.3);
-        }
-
-        .dashboard-content {
-            margin-left: 200px;
-            padding: 0;
-        }
-
-        .content-header {
-            background: white;
-            padding: 1.5rem 2rem;
-            border-bottom: 1px solid #dee2e6;
-            font-size: 1.25rem;
-            font-weight: 500;
-            color: #333;
-        }
-
-        .content-body {
-            padding: 2rem;
-        }
-
-        .info-card {
-            background: #D4E7F5;
-            border-radius: 12px;
-            padding: 2.5rem;
+            background-color: #6fa8dc;
+            color: #fff;
+            width: calc(100% - 30px);
+            margin: 15px;
+            padding: 8px;
+            border-radius: 6px;
+            font-size: 13px;
             border: none;
         }
 
-        .info-row {
+        .sidebar-logout .btn:hover {
+            background-color: #5a8fc7;
+        }
+
+        .dashboard-content {
+            margin-left: 220px;
+            padding: 0;
+        }
+
+        .main-box {
+            background-color: #ffffff;
+            border-radius: 6px;
+            padding: 15px;
+            margin: 20px;
+        }
+
+        .top-bar {
+            border-bottom: 1px solid #000;
+            padding-bottom: 8px;
+            margin-bottom: 15px;
             display: flex;
-            margin-bottom: 1.5rem;
+            justify-content: space-between;
             align-items: center;
         }
 
-        .info-label {
-            font-weight: 500;
-            color: #333;
-            min-width: 200px;
-            text-align: right;
-            margin-right: 2rem;
+        .profile-pic {
+            background-color: #e7f3ff;
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-size: 13px;
         }
 
-        .info-value {
-            color: #333;
-            background: white;
-            padding: 0.5rem 1rem;
+        .content-box {
+            background-color: #e7f3ff;
             border-radius: 6px;
-            min-width: 250px;
+            padding: 30px;
+            margin-top: 15px;
         }
 
-        .info-value.readonly {
-            background: white;
-            border: 1px solid #dee2e6;
+        .info-row {
+            margin-bottom: 15px;
+            font-size: 14px;
+            text-align: center;
+        }
+
+        .info-row strong {
+            margin-right: 5px;
         }
 
         @media (max-width: 768px) {
@@ -141,11 +134,6 @@
 
             .sidebar-logout {
                 position: relative;
-                margin-top: 2rem;
-                bottom: auto;
-                left: auto;
-                transform: none;
-                text-align: center;
             }
         }
     </style>
@@ -171,10 +159,16 @@
 
         <!-- Main Content -->
         <div class="dashboard-content flex-fill">
-            <div class="content-header">
-                User | @yield('page-title')
-            </div>
-            <div class="content-body">
+            <div class="main-box">
+                <!-- Top Bar -->
+                <div class="top-bar">
+                    <div>
+                        <strong>User</strong> &nbsp; | &nbsp; <span>@yield('page-title')</span>
+                    </div>
+                    <div class="profile-pic">Profile Pic Here</div>
+                </div>
+
+                <!-- Content -->
                 @yield('content')
             </div>
         </div>

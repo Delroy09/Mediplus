@@ -7,6 +7,8 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\Patient;
 use App\Models\Doctor;
 use App\Models\User;
+use App\Models\Appointment;
+use App\Models\MedicalRecord;
 
 class DoctorController extends Controller
 {
@@ -15,49 +17,27 @@ class DoctorController extends Controller
      */
     public function dashboard()
     {
-        $user = (object)[
-            'name' => 'Dr. Sarah Smith',
-            'email' => 'dr.smith@mediplus.com'
-        ];
+        // Temporary: Using first doctor for testing (ID = 1)
+        $doctor = Doctor::with('user')->find(1);
+
+        if (!$doctor) {
+            abort(404, 'Doctor not found');
+        }
+
+        $user = $doctor->user;
+
+        // Get assigned patients
+        $patients = $doctor->patients()->with('user')->get();
 
         // Statistics
         $stats = [
-            'active_patients' => 12,
-            'appointments_today' => 5,
-            'pending_updates' => 3,
-            'total_records' => 47
-        ];
-
-        // Dummy patients data (will be replaced with actual query)
-        // SELECT p.*, u.name FROM patients p 
-        // JOIN users u ON p.user_id = u.id
-        // JOIN patient_doctor_assignments pda ON p.id = pda.patient_id
-        // WHERE pda.doctor_id = ? AND pda.is_active = TRUE
-        $patients = [
-            (object)[
-                'id' => 1,
-                'user' => (object)['name' => 'John Doe'],
-                'dob' => '1985-05-15',
-                'blood_group' => 'A+',
-                'status' => 'Admitted',
-                'last_visited_date' => '2026-01-15'
-            ],
-            (object)[
-                'id' => 2,
-                'user' => (object)['name' => 'Jane Wilson'],
-                'dob' => '1992-08-22',
-                'blood_group' => 'B+',
-                'status' => 'Surgery',
-                'last_visited_date' => '2026-01-18'
-            ],
-            (object)[
-                'id' => 3,
-                'user' => (object)['name' => 'Mike Johnson'],
-                'dob' => '1978-03-10',
-                'blood_group' => 'O-',
-                'status' => 'Discharged',
-                'last_visited_date' => '2026-01-10'
-            ]
+            'active_patients' => $patients->where('status', '!=', 'Discharged')->count(),
+            'appointments_today' => Appointment::where('doctor_id', $doctor->id)
+                ->whereDate('appointment_date', today())
+                ->where('status', 'scheduled')
+                ->count(),
+            'pending_updates' => $patients->where('status', 'Admitted')->count(),
+            'total_records' => MedicalRecord::where('doctor_id', $doctor->id)->count()
         ];
 
         return view('doctor.docdashboard', compact('user', 'stats', 'patients'));
@@ -68,10 +48,15 @@ class DoctorController extends Controller
      */
     public function patients()
     {
-        $user = (object)['name' => 'Dr. Sarah Smith'];
+        // Temporary: Using first doctor for testing (ID = 1)
+        $doctor = Doctor::with('user')->find(1);
 
-        // Will be replaced with actual database query
-        $patients = [];
+        if (!$doctor) {
+            abort(404, 'Doctor not found');
+        }
+
+        $user = $doctor->user;
+        $patients = $doctor->patients()->with('user')->get();
 
         return view('doctor.patients', compact('user', 'patients'));
     }
@@ -81,25 +66,16 @@ class DoctorController extends Controller
      */
     public function viewPatient($id)
     {
-        $user = (object)['name' => 'Dr. Sarah Smith'];
+        $doctor = Doctor::with('user')->find(1);
+        $user = $doctor->user;
 
-        // TODO: Fetch patient details
-        // $patient = Patient::with('user', 'medicalRecords')->findOrFail($id);
+        $patient = Patient::with('user')->findOrFail($id);
+        $medicalRecords = MedicalRecord::where('patient_id', $id)
+            ->with(['doctor.user'])
+            ->orderBy('visit_date', 'desc')
+            ->get();
 
-        $patient = (object)[
-            'id' => $id,
-            'user' => (object)['name' => 'John Doe', 'email' => 'john@example.com'],
-            'dob' => '1985-05-15',
-            'gender' => 'male',
-            'blood_group' => 'A+',
-            'mobile_number' => '1234567890',
-            'address' => '456 Oak Avenue',
-            'status' => 'Admitted',
-            'admission_date' => '2026-01-10',
-            'last_visited_date' => '2026-01-15'
-        ];
-
-        return view('doctor.patient-details', compact('user', 'patient'));
+        return view('doctor.patient-details', compact('user', 'patient', 'medicalRecords'));
     }
 
     /**
@@ -107,13 +83,10 @@ class DoctorController extends Controller
      */
     public function updateStatusForm($id)
     {
-        $user = (object)['name' => 'Dr. Sarah Smith'];
+        $doctor = Doctor::with('user')->find(1);
+        $user = $doctor->user;
 
-        $patient = (object)[
-            'id' => $id,
-            'user' => (object)['name' => 'John Doe'],
-            'status' => 'Admitted'
-        ];
+        $patient = Patient::with('user')->findOrFail($id);
 
         return view('doctor.update-status', compact('user', 'patient'));
     }
@@ -140,25 +113,13 @@ class DoctorController extends Controller
      */
     public function schedule()
     {
-        $user = (object)['name' => 'Dr. Sarah Smith'];
+        $doctor = Doctor::with('user')->find(1);
+        $user = $doctor->user;
 
-        // Dummy appointments
-        $appointments = [
-            (object)[
-                'patient_name' => 'John Doe',
-                'appointment_date' => '2026-01-20 10:00 AM',
-                'type' => 'Checkup',
-                'status' => 'scheduled',
-                'reason' => 'Regular checkup'
-            ],
-            (object)[
-                'patient_name' => 'Jane Wilson',
-                'appointment_date' => '2026-01-20 02:30 PM',
-                'type' => 'Follow-up',
-                'status' => 'scheduled',
-                'reason' => 'Post-surgery follow-up'
-            ]
-        ];
+        $appointments = Appointment::where('doctor_id', $doctor->id)
+            ->with(['patient.user'])
+            ->orderBy('appointment_date', 'asc')
+            ->get();
 
         return view('doctor.schedule', compact('user', 'appointments'));
     }
@@ -168,19 +129,13 @@ class DoctorController extends Controller
      */
     public function profile()
     {
-        $user = (object)[
-            'name' => 'Dr. Sarah Smith',
-            'email' => 'dr.smith@mediplus.com'
-        ];
+        $doctor = Doctor::with('user')->find(1);
 
-        $doctor = (object)[
-            'specialization' => 'Cardiology',
-            'department' => 'Internal Medicine',
-            'license_number' => 'MD123456',
-            'qualification' => 'MBBS, MD (Cardiology)',
-            'years_of_experience' => 12,
-            'consultation_hours' => 'Mon-Fri 9AM-5PM'
-        ];
+        if (!$doctor) {
+            abort(404, 'Doctor not found');
+        }
+
+        $user = $doctor->user;
 
         return view('doctor.profile', compact('user', 'doctor'));
     }
@@ -190,12 +145,10 @@ class DoctorController extends Controller
      */
     public function createMedicalRecord($patientId)
     {
-        $user = (object)['name' => 'Dr. Sarah Smith'];
+        $doctor = Doctor::with('user')->find(1);
+        $user = $doctor->user;
 
-        $patient = (object)[
-            'id' => $patientId,
-            'user' => (object)['name' => 'John Doe']
-        ];
+        $patient = Patient::with('user')->findOrFail($patientId);
 
         return view('doctor.create-medical-record', compact('user', 'patient'));
     }

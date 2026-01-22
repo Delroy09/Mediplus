@@ -20,7 +20,7 @@ return new class extends Migration
             $table->enum('status', ['scheduled', 'completed', 'cancelled', 'no_show'])->default('scheduled');
             $table->text('reason');
             $table->text('notes')->nullable();
-            $table->foreignId('created_by')->constrained('users')->onDelete('set null');
+            $table->foreignId('created_by')->nullable()->constrained('users')->onDelete('set null');
             $table->timestamps();
 
             // Prevent double-booking same doctor at same time

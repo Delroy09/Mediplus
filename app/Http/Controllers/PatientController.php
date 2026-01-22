@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Patient;
 use App\Models\User;
+use App\Models\Appointment;
 
 class PatientController extends Controller
 {
@@ -14,20 +15,14 @@ class PatientController extends Controller
      */
     public function dashboard()
     {
-        // Get current authenticated user (will be implemented with auth)
-        // For now, using dummy data
-        $user = (object)[
-            'name' => 'Nash Dsouza',
-            'email' => 'nds@gmail.com'
-        ];
+        // Temporary: Using first patient for testing (ID = 1)
+        $patient = Patient::with('user')->find(1);
 
-        $patient = (object)[
-            'dob' => '2003-12-31',
-            'gender' => 'male',
-            'blood_group' => 'O+',
-            'status' => 'Discharged',
-            'last_surgery_date' => '31/12/2003'
-        ];
+        if (!$patient) {
+            abort(404, 'Patient not found');
+        }
+
+        $user = $patient->user;
 
         return view('patient.dashboard', compact('user', 'patient'));
     }
@@ -37,20 +32,14 @@ class PatientController extends Controller
      */
     public function profile()
     {
-        $user = (object)[
-            'name' => 'Nash Dsouza',
-            'email' => 'nds@gmail.com'
-        ];
+        // Temporary: Using first patient for testing (ID = 1)
+        $patient = Patient::with('user')->find(1);
 
-        $patient = (object)[
-            'dob' => '2003-12-31',
-            'gender' => 'male',
-            'blood_group' => 'O+',
-            'mobile_number' => '1234567890',
-            'address' => '123 Main Street, City',
-            'status' => 'Discharged',
-            'last_surgery_date' => '31/12/2003'
-        ];
+        if (!$patient) {
+            abort(404, 'Patient not found');
+        }
+
+        $user = $patient->user;
 
         return view('patient.profile', compact('user', 'patient'));
     }
@@ -76,25 +65,18 @@ class PatientController extends Controller
      */
     public function schedule()
     {
-        $user = (object)['name' => 'Nash Dsouza'];
+        // Temporary: Using first patient for testing (ID = 1)
+        $patient = Patient::with('user')->find(1);
 
-        // Dummy appointments data
-        $appointments = [
-            (object)[
-                'doctor_name' => 'Dr. Smith',
-                'specialization' => 'Cardiology',
-                'appointment_date' => '2026-01-25 10:00 AM',
-                'type' => 'Checkup',
-                'status' => 'scheduled'
-            ],
-            (object)[
-                'doctor_name' => 'Dr. Johnson',
-                'specialization' => 'General Medicine',
-                'appointment_date' => '2026-02-01 02:30 PM',
-                'type' => 'Follow-up',
-                'status' => 'scheduled'
-            ]
-        ];
+        if (!$patient) {
+            abort(404, 'Patient not found');
+        }
+
+        $user = $patient->user;
+        $appointments = Appointment::where('patient_id', $patient->id)
+            ->with(['doctor.user'])
+            ->orderBy('appointment_date', 'desc')
+            ->get();
 
         return view('patient.schedule', compact('user', 'appointments'));
     }
@@ -104,14 +86,14 @@ class PatientController extends Controller
      */
     public function manage()
     {
-        $user = (object)[
-            'name' => 'Nash Dsouza',
-            'email' => 'nds@gmail.com'
-        ];
+        // Temporary: Using first patient for testing (ID = 1)
+        $patient = Patient::with('user')->find(1);
 
-        $patient = (object)[
-            'status' => 'Discharged'
-        ];
+        if (!$patient) {
+            abort(404, 'Patient not found');
+        }
+
+        $user = $patient->user;
 
         return view('patient.manage', compact('user', 'patient'));
     }
