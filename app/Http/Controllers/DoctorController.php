@@ -173,4 +173,161 @@ class DoctorController extends Controller
 
         return redirect()->route('doctor.patient.view', $patientId)->with('success', 'Medical record added successfully!');
     }
+
+    // =============================================
+    // V2 Methods (New UI - Same functionality)
+    // =============================================
+
+    /**
+     * V2 Dashboard
+     */
+    public function dashboardV2()
+    {
+        $user = Auth::user();
+        $doctor = Doctor::where('user_id', $user->id)->with('user')->first();
+
+        if (!$doctor) {
+            abort(404, 'Doctor record not found');
+        }
+
+        $patients = $doctor->patients()->wherePivot('is_active', true)->with('user')->get();
+
+        $stats = [
+            'active_patients' => $patients->where('status', '!=', 'Discharged')->count(),
+            'appointments_today' => Appointment::where('doctor_id', $doctor->id)
+                ->whereDate('appointment_date', today())
+                ->where('status', 'scheduled')
+                ->count(),
+            'pending_updates' => $patients->where('status', 'Admitted')->count(),
+            'total_records' => MedicalRecord::where('doctor_id', $doctor->id)->count()
+        ];
+
+        return view('NewUI.doctor.dashboard_v2', compact('user', 'stats', 'patients'));
+    }
+
+    /**
+     * V2 Patients List
+     */
+    public function patientsV2()
+    {
+        $user = Auth::user();
+        $doctor = Doctor::where('user_id', $user->id)->with('user')->first();
+
+        if (!$doctor) {
+            abort(404, 'Doctor not found');
+        }
+
+        $user = $doctor->user;
+        $patients = $doctor->patients()->with('user')->get();
+
+        return view('NewUI.doctor.patients_v2', compact('user', 'patients'));
+    }
+
+    /**
+     * V2 View Patient
+     */
+    public function viewPatientV2($id)
+    {
+        $doctor = Doctor::with('user')->find(1);
+        $user = $doctor->user;
+
+        $patient = Patient::with('user')->findOrFail($id);
+        $medicalRecords = MedicalRecord::where('patient_id', $id)
+            ->with(['doctor.user'])
+            ->orderBy('visit_date', 'desc')
+            ->get();
+
+        return view('NewUI.doctor.patient-details_v2', compact('user', 'patient', 'medicalRecords'));
+    }
+
+    /**
+     * V2 Update Status Form
+     */
+    public function updateStatusFormV2($id)
+    {
+        $doctor = Doctor::with('user')->find(1);
+        $user = $doctor->user;
+
+        $patient = Patient::with('user')->findOrFail($id);
+
+        return view('NewUI.doctor.update-status_v2', compact('user', 'patient'));
+    }
+
+    /**
+     * V2 Create Medical Record Form
+     */
+    public function createMedicalRecordV2($patientId)
+    {
+        $doctor = Doctor::with('user')->find(1);
+        $user = $doctor->user;
+
+        $patient = Patient::with('user')->findOrFail($patientId);
+
+        return view('NewUI.doctor.create-medical-record_v2', compact('user', 'patient'));
+    }
+
+    /**
+     * V2 Schedule
+     */
+    public function scheduleV2()
+    {
+        $doctor = Doctor::with('user')->find(1);
+        $user = $doctor->user;
+
+        $appointments = Appointment::where('doctor_id', $doctor->id)
+            ->with(['patient.user'])
+            ->orderBy('appointment_date', 'asc')
+            ->get();
+
+        $todaySchedule = $appointments->filter(function ($apt) {
+            return $apt->appointment_date && $apt->appointment_date->isToday();
+        });
+
+        $todayAppointments = $todaySchedule->count();
+        $upcomingAppointments = $appointments->filter(function ($apt) {
+            return $apt->appointment_date && $apt->appointment_date->isFuture();
+        })->count();
+        $completedAppointments = $appointments->where('status', 'completed')->count();
+        $cancelledAppointments = $appointments->where('status', 'cancelled')->count();
+
+        return view('NewUI.doctor.schedule_v2', compact(
+            'user',
+            'appointments',
+            'todaySchedule',
+            'todayAppointments',
+            'upcomingAppointments',
+            'completedAppointments',
+            'cancelledAppointments'
+        ));
+    }
+
+    /**
+     * V2 Profile
+     */
+    public function profileV2()
+    {
+        $doctor = Doctor::with('user')->find(1);
+
+        if (!$doctor) {
+            abort(404, 'Doctor not found');
+        }
+
+        $user = $doctor->user;
+
+        $totalPatients = $doctor->patients()->count();
+        $activePatients = $doctor->patients()->where('status', '!=', 'Discharged')->count();
+        $totalRecords = MedicalRecord::where('doctor_id', $doctor->id)->count();
+        $upcomingAppointments = Appointment::where('doctor_id', $doctor->id)
+            ->where('appointment_date', '>=', now())
+            ->count();
+
+        return view('NewUI.doctor.profile_v2', compact(
+            'user',
+            'doctor',
+            'totalPatients',
+            'activePatients',
+            'totalRecords',
+            'upcomingAppointments'
+        ));
+    }
 }

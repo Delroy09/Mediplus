@@ -116,6 +116,77 @@ class PatientController extends Controller
         return redirect()->route('patient.manage')->with('success', 'Deletion request submitted. IT admin will review shortly.');
     }
 
+    // =============================================
+    // V2 Methods (New UI - Same functionality)
+    // =============================================
+
+    /**
+     * V2 Dashboard
+     */
+    public function dashboardV2()
+    {
+        $user = Auth::user();
+        $patient = Patient::where('user_id', $user->id)->with(['user', 'doctors.user'])->first();
+
+        if (!$patient) {
+            abort(404, 'Patient record not found');
+        }
+
+        $assignedDoctors = $patient->doctors()->wherePivot('is_active', true)->with('user')->get();
+
+        return view('NewUI.patient.dashboard_v2', compact('user', 'patient', 'assignedDoctors'));
+    }
+
+    /**
+     * V2 Profile
+     */
+    public function profileV2()
+    {
+        $user = Auth::user();
+        $patient = Patient::where('user_id', $user->id)->with('user')->first();
+
+        if (!$patient) {
+            abort(404, 'Patient record not found');
+        }
+
+        return view('NewUI.patient.profile_v2', compact('user', 'patient'));
+    }
+
+    /**
+     * V2 Schedule
+     */
+    public function scheduleV2()
+    {
+        $patient = Patient::with('user')->find(1);
+
+        if (!$patient) {
+            abort(404, 'Patient not found');
+        }
+
+        $user = $patient->user;
+        $appointments = Appointment::where('patient_id', $patient->id)
+            ->with(['doctor.user'])
+            ->orderBy('appointment_date', 'desc')
+            ->get();
+
+        return view('NewUI.patient.schedule_v2', compact('user', 'appointments'));
+    }
+
+    /**
+     * V2 Manage
+     */
+    public function manageV2()
+    {
+        $user = Auth::user();
+        $patient = Patient::where('user_id', $user->id)->with('user')->first();
+
+        if (!$patient) {
+            abort(404, 'Patient record not found');
+        }
+
+        return view('NewUI.patient.manage_v2', compact('user', 'patient'));
+    }
+
     // Legacy CRUD methods (kept for compatibility)
     public function index() {}
     public function create() {}

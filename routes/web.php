@@ -52,11 +52,11 @@ Route::post('/v2/login', function (\Illuminate\Http\Request $request) {
         $user = Auth::user();
 
         if ($user->role === 'admin') {
-            return redirect()->intended('/admin/dashboard');
+            return redirect()->intended('/v2/admin/dashboard');
         } elseif ($user->role === 'doctor') {
-            return redirect()->intended('/doctor/dashboard');
+            return redirect()->intended('/v2/doctor/dashboard');
         } else {
-            return redirect()->intended('/patient/dashboard');
+            return redirect()->intended('/v2/patient/dashboard');
         }
     }
 
@@ -87,7 +87,7 @@ Route::post('/v2/doctor/login', function (\Illuminate\Http\Request $request) {
         }
 
         $request->session()->regenerate();
-        return redirect()->intended('/doctor/dashboard');
+        return redirect()->intended('/v2/doctor/dashboard');
     }
 
     return back()->withErrors([
@@ -200,3 +200,49 @@ Route::get('/dashboard', function () {
     // TODO: Redirect based on user role after authentication
     return redirect()->route('patient.dashboard');
 })->name('dashboard');
+
+// ============================================
+// V2 Dashboard Routes (A/B Testing - New UI)
+// ============================================
+
+// V2 Patient Dashboard Routes (Protected)
+Route::prefix('v2/patient')->name('patient.')->middleware('auth')->group(function () {
+    Route::get('/dashboard', [PatientController::class, 'dashboardV2'])->name('dashboard.v2');
+    Route::get('/profile', [PatientController::class, 'profileV2'])->name('profile.v2');
+    Route::get('/schedule', [PatientController::class, 'scheduleV2'])->name('schedule.v2');
+    Route::get('/manage', [PatientController::class, 'manageV2'])->name('manage.v2');
+});
+
+// V2 Doctor Dashboard Routes (Protected)
+Route::prefix('v2/doctor')->name('doctor.')->middleware('auth')->group(function () {
+    Route::get('/dashboard', [DoctorController::class, 'dashboardV2'])->name('dashboard.v2');
+    Route::get('/patients', [DoctorController::class, 'patientsV2'])->name('patients.v2');
+    Route::get('/patient/{id}', [DoctorController::class, 'viewPatientV2'])->name('patient.view.v2');
+    Route::get('/patient/{id}/update-status', [DoctorController::class, 'updateStatusFormV2'])->name('patient.update-status.v2');
+    Route::put('/patient/{id}/update-status', [DoctorController::class, 'updateStatus'])->name('patient.update-status.post');
+    Route::get('/patient/{id}/add-record', [DoctorController::class, 'createMedicalRecordV2'])->name('patient.create-record.v2');
+    Route::post('/patient/{id}/add-record', [DoctorController::class, 'storeMedicalRecord'])->name('patient.create-record.post');
+    Route::get('/schedule', [DoctorController::class, 'scheduleV2'])->name('schedule.v2');
+    Route::get('/profile', [DoctorController::class, 'profileV2'])->name('profile.v2');
+});
+
+// V2 Admin Dashboard Routes
+Route::prefix('v2/admin')->name('admin.')->group(function () {
+    Route::get('/dashboard', [AdminController::class, 'dashboardV2'])->name('dashboard.v2');
+    Route::get('/doctors', [AdminController::class, 'doctorsV2'])->name('doctors.v2');
+    Route::get('/doctor/create', [AdminController::class, 'createDoctorV2'])->name('doctor.create.v2');
+    Route::post('/doctor', [AdminController::class, 'storeDoctor'])->name('doctor.store');
+    Route::get('/doctor/{id}', [AdminController::class, 'viewDoctorV2'])->name('doctor.view.v2');
+    Route::get('/doctor/{id}/edit', [AdminController::class, 'editDoctorV2'])->name('doctor.edit.v2');
+    Route::put('/doctor/{id}', [AdminController::class, 'updateDoctor'])->name('doctor.update');
+    Route::delete('/doctor/{id}', [AdminController::class, 'deleteDoctor'])->name('doctor.delete');
+    Route::get('/patients', [AdminController::class, 'patientsV2'])->name('patients.v2');
+    Route::get('/patient/{id}', [AdminController::class, 'viewPatientV2'])->name('patient.view.v2');
+    Route::get('/patient/{id}/assign', [AdminController::class, 'assignPatientV2'])->name('patient.assign.v2');
+    Route::post('/patient/{id}/assign', [AdminController::class, 'assignPatientPost'])->name('patient.assign.post');
+    Route::get('/assignments', [AdminController::class, 'assignmentsV2'])->name('assignments.v2');
+    Route::post('/assignment', [AdminController::class, 'storeAssignment'])->name('assignment.store');
+    Route::delete('/assignment/{id}', [AdminController::class, 'deleteAssignment'])->name('assignment.delete');
+    Route::post('/approve-deletion/{id}', [AdminController::class, 'approveDeletion'])->name('approve-deletion');
+    Route::post('/reject-deletion/{id}', [AdminController::class, 'rejectDeletion'])->name('reject-deletion');
+});
