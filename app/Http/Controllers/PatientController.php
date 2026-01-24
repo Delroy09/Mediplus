@@ -186,6 +186,46 @@ class PatientController extends Controller
         return view('NewUI.patient.manage_v2', compact('user', 'patient'));
     }
 
+    /**
+     * V2 Update Profile - Redirects to V2 profile page
+     */
+    public function updateProfileV2(Request $request)
+    {
+        $validated = $request->validate([
+            'mobile_number' => 'required|digits:10',
+            'address' => 'required|string|max:500'
+        ]);
+
+        $patient = Patient::where('user_id', Auth::id())->first();
+        if ($patient) {
+            $patient->update([
+                'mobile_number' => $validated['mobile_number'],
+                'address' => $validated['address']
+            ]);
+        }
+
+        return redirect()->route('patient.profile.v2')->with('success', 'Profile updated successfully!');
+    }
+
+    /**
+     * V2 Request Deletion - Redirects to V2 manage page
+     */
+    public function requestDeletionV2(Request $request)
+    {
+        $validated = $request->validate([
+            'reason' => 'required|string|max:500'
+        ]);
+
+        // TODO: Create deletion request in database
+        // DeletionRequest::create([
+        //     'user_id' => Auth::id(),
+        //     'reason' => $validated['reason'],
+        //     'status' => 'pending'
+        // ]);
+
+        return redirect()->route('patient.manage.v2')->with('success', 'Deletion request submitted. IT admin will review shortly.');
+    }
+
     // Legacy CRUD methods (kept for compatibility)
     public function index() {}
     public function create() {}

@@ -345,4 +345,61 @@ class DoctorController extends Controller
             'upcomingAppointments'
         ));
     }
+
+    /**
+     * V2 Update patient status (redirects to V2)
+     */
+    public function updateStatusV2(Request $request, $id)
+    {
+        $validated = $request->validate([
+            'status' => 'required|in:Admitted,Surgery,Discharged',
+            'notes' => 'nullable|string|max:500',
+            'last_visited_date' => 'nullable|date'
+        ]);
+
+        $patient = Patient::findOrFail($id);
+        $patient->update([
+            'status' => $validated['status'],
+            'last_visited_date' => $validated['last_visited_date'] ?? $patient->last_visited_date
+        ]);
+
+        return redirect()->route('doctor.patient.view.v2', $id)->with('success', 'Patient status updated successfully!');
+    }
+
+    /**
+     * V2 Store medical record (redirects to V2)
+     */
+    public function storeMedicalRecordV2(Request $request, $patientId)
+    {
+        $validated = $request->validate([
+            'diagnosis' => 'required|string',
+            'treatment' => 'required|string',
+            'medications' => 'nullable|string',
+            'blood_pressure' => 'nullable|string',
+            'temperature' => 'nullable|string',
+            'weight' => 'nullable|numeric',
+            'height' => 'nullable|numeric',
+            'notes' => 'nullable|string',
+            'follow_up_date' => 'nullable|date'
+        ]);
+
+        $user = Auth::user();
+        $doctor = Doctor::where('user_id', $user->id)->first();
+
+        if (!$doctor) {
+            return redirect()->back()->with('error', 'Doctor record not found.');
+        }
+
+        MedicalRecord::create([
+            'patient_id' => $patientId,
+            'doctor_id' => $doctor->id,
+            'visit_date' => now(),
+            'diagnosis' => $validated['diagnosis'],
+            'treatment' => $validated['treatment'],
+            'medications' => $validated['medications'],
+            'notes' => $validated['notes'],
+        ]);
+
+        return redirect()->route('doctor.patient.view.v2', $patientId)->with('success', 'Medical record added successfully!');
+    }
 }

@@ -85,7 +85,7 @@
         </div>
         @endif
 
-        <form action="{{ route('doctor.patient.create-record.post', $patient->id) }}" method="POST">
+        <form action="{{ route('doctor.patient.create-record.post.v2', $patient->id) }}" method="POST">
             @csrf
 
             <div class="row">

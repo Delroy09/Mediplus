@@ -45,9 +45,8 @@
         <h5 style="margin: 0; font-weight: 600;">Profile Information</h5>
     </div>
     <div class="card-body">
-        <form action="{{ route('patient.profile.update') }}" method="POST">
+        <form action="{{ route('patient.profile.update.v2') }}" method="POST">
             @csrf
-            @method('PUT')
 
             <div class="row">
                 <div class="col-md-6">

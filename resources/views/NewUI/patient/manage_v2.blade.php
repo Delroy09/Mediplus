@@ -76,8 +76,12 @@
         <p style="color: var(--text-secondary); margin-bottom: 1.5rem;">
             Once you request account deletion, all your data will be permanently removed. This action cannot be undone.
         </p>
-        <form action="{{ route('patient.request-deletion') }}" method="POST">
+        <form action="{{ route('patient.request-deletion.v2') }}" method="POST">
             @csrf
+            <div class="mb-3">
+                <label class="form-label-v2">Reason for Deletion</label>
+                <textarea name="reason" class="form-control form-control-v2" rows="3" required placeholder="Please provide a reason for account deletion..."></textarea>
+            </div>
             <button type="submit" class="btn-v2 btn-v2-danger" onclick="return confirm('Are you sure you want to request account deletion? This action cannot be undone.')">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 18px; height: 18px;">
                     <polyline points="3 6 5 6 21 6"></polyline>

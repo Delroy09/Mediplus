@@ -91,9 +91,8 @@
         </div>
         @endif
 
-        <form action="{{ route('doctor.patient.update-status.post', $patient->id) }}" method="POST">
+        <form action="{{ route('doctor.patient.update-status.post.v2', $patient->id) }}" method="POST">
             @csrf
-            @method('PUT')
 
             <div class="form-group-v2">
                 <label class="form-label-v2" for="status">New Status *</label>

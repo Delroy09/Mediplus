@@ -209,8 +209,10 @@ Route::get('/dashboard', function () {
 Route::prefix('v2/patient')->name('patient.')->middleware('auth')->group(function () {
     Route::get('/dashboard', [PatientController::class, 'dashboardV2'])->name('dashboard.v2');
     Route::get('/profile', [PatientController::class, 'profileV2'])->name('profile.v2');
+    Route::post('/profile', [PatientController::class, 'updateProfileV2'])->name('profile.update.v2');
     Route::get('/schedule', [PatientController::class, 'scheduleV2'])->name('schedule.v2');
     Route::get('/manage', [PatientController::class, 'manageV2'])->name('manage.v2');
+    Route::post('/request-deletion', [PatientController::class, 'requestDeletionV2'])->name('request-deletion.v2');
 });
 
 // V2 Doctor Dashboard Routes (Protected)
@@ -219,9 +221,9 @@ Route::prefix('v2/doctor')->name('doctor.')->middleware('auth')->group(function 
     Route::get('/patients', [DoctorController::class, 'patientsV2'])->name('patients.v2');
     Route::get('/patient/{id}', [DoctorController::class, 'viewPatientV2'])->name('patient.view.v2');
     Route::get('/patient/{id}/update-status', [DoctorController::class, 'updateStatusFormV2'])->name('patient.update-status.v2');
-    Route::put('/patient/{id}/update-status', [DoctorController::class, 'updateStatus'])->name('patient.update-status.post');
+    Route::post('/patient/{id}/update-status', [DoctorController::class, 'updateStatusV2'])->name('patient.update-status.post.v2');
     Route::get('/patient/{id}/add-record', [DoctorController::class, 'createMedicalRecordV2'])->name('patient.create-record.v2');
-    Route::post('/patient/{id}/add-record', [DoctorController::class, 'storeMedicalRecord'])->name('patient.create-record.post');
+    Route::post('/patient/{id}/add-record', [DoctorController::class, 'storeMedicalRecordV2'])->name('patient.create-record.post.v2');
     Route::get('/schedule', [DoctorController::class, 'scheduleV2'])->name('schedule.v2');
     Route::get('/profile', [DoctorController::class, 'profileV2'])->name('profile.v2');
 });
