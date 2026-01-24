@@ -157,13 +157,12 @@ class PatientController extends Controller
      */
     public function scheduleV2()
     {
-        $patient = Patient::with('user')->find(1);
+        $user = Auth::user();
+        $patient = Patient::where('user_id', $user->id)->with('user')->first();
 
         if (!$patient) {
-            abort(404, 'Patient not found');
+            abort(404, 'Patient record not found');
         }
-
-        $user = $patient->user;
         $appointments = Appointment::where('patient_id', $patient->id)
             ->with(['doctor.user'])
             ->orderBy('appointment_date', 'desc')

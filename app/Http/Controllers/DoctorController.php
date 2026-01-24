@@ -228,8 +228,12 @@ class DoctorController extends Controller
      */
     public function viewPatientV2($id)
     {
-        $doctor = Doctor::with('user')->find(1);
-        $user = $doctor->user;
+        $user = Auth::user();
+        $doctor = Doctor::where('user_id', $user->id)->with('user')->first();
+
+        if (!$doctor) {
+            abort(404, 'Doctor record not found');
+        }
 
         $patient = Patient::with('user')->findOrFail($id);
         $medicalRecords = MedicalRecord::where('patient_id', $id)
@@ -245,8 +249,12 @@ class DoctorController extends Controller
      */
     public function updateStatusFormV2($id)
     {
-        $doctor = Doctor::with('user')->find(1);
-        $user = $doctor->user;
+        $user = Auth::user();
+        $doctor = Doctor::where('user_id', $user->id)->with('user')->first();
+
+        if (!$doctor) {
+            abort(404, 'Doctor record not found');
+        }
 
         $patient = Patient::with('user')->findOrFail($id);
 
@@ -258,8 +266,12 @@ class DoctorController extends Controller
      */
     public function createMedicalRecordV2($patientId)
     {
-        $doctor = Doctor::with('user')->find(1);
-        $user = $doctor->user;
+        $user = Auth::user();
+        $doctor = Doctor::where('user_id', $user->id)->with('user')->first();
+
+        if (!$doctor) {
+            abort(404, 'Doctor record not found');
+        }
 
         $patient = Patient::with('user')->findOrFail($patientId);
 
@@ -271,8 +283,12 @@ class DoctorController extends Controller
      */
     public function scheduleV2()
     {
-        $doctor = Doctor::with('user')->find(1);
-        $user = $doctor->user;
+        $user = Auth::user();
+        $doctor = Doctor::where('user_id', $user->id)->with('user')->first();
+
+        if (!$doctor) {
+            abort(404, 'Doctor record not found');
+        }
 
         $appointments = Appointment::where('doctor_id', $doctor->id)
             ->with(['patient.user'])
@@ -306,13 +322,12 @@ class DoctorController extends Controller
      */
     public function profileV2()
     {
-        $doctor = Doctor::with('user')->find(1);
+        $user = Auth::user();
+        $doctor = Doctor::where('user_id', $user->id)->with('user')->first();
 
         if (!$doctor) {
-            abort(404, 'Doctor not found');
+            abort(404, 'Doctor record not found');
         }
-
-        $user = $doctor->user;
 
         $totalPatients = $doctor->patients()->count();
         $activePatients = $doctor->patients()->where('status', '!=', 'Discharged')->count();
