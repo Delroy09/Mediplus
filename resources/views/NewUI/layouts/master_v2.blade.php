@@ -503,22 +503,22 @@
                     <div class="footer-links d-flex flex-column gap-2">
                         <a href="{{ route('home.v2') }}">Home</a>
                         <a href="{{ route('contact.v2') }}">Apply Now</a>
-                        <a href="{{ route('login') }}">Patient Login</a>
+                        <a href="{{ route('login.v2') }}">Patient Login</a>
                     </div>
                 </div>
                 <div class="col-md-2 mb-4 mb-md-0">
                     <h6 class="mb-3">Staff</h6>
                     <div class="footer-links d-flex flex-column gap-2">
-                        <a href="{{ route('doctor.login') }}">Doctor Portal</a>
+                        <a href="{{ route('doctor.login.v2') }}">Doctor Portal</a>
                         <a href="{{ route('login') }}">Admin Login</a>
                     </div>
                 </div>
                 <div class="col-md-4">
                     <h6 class="mb-3">Contact</h6>
                     <div class="footer-text">
-                        <p class="mb-1">📧 support@mediplus.com</p>
+                        <p class="mb-1">📧 delroy@mediplus.com</p>
                         <p class="mb-1">📞 +1 (555) 123-4567</p>
-                        <p class="mb-0">📍 123 Medical Center Drive</p>
+                        <p class="mb-0">📍 Seminar Hall (F-303) </p>
                     </div>
                 </div>
             </div>

@@ -36,6 +36,65 @@ Route::get('/v2/contact', function () {
 // V2 Contact form submission (uses same controller)
 Route::post('/v2/contact', [ContactController::class, 'submit'])->name('contact.v2.submit');
 
+// V2 Login Routes
+Route::get('/v2/login', function () {
+    return view('NewUI.login_v2');
+})->name('login.v2');
+
+Route::post('/v2/login', function (\Illuminate\Http\Request $request) {
+    $credentials = $request->validate([
+        'email' => 'required|email',
+        'password' => 'required',
+    ]);
+
+    if (Auth::attempt($credentials)) {
+        $request->session()->regenerate();
+        $user = Auth::user();
+
+        if ($user->role === 'admin') {
+            return redirect()->intended('/admin/dashboard');
+        } elseif ($user->role === 'doctor') {
+            return redirect()->intended('/doctor/dashboard');
+        } else {
+            return redirect()->intended('/patient/dashboard');
+        }
+    }
+
+    return back()->withErrors([
+        'email' => 'Invalid credentials.',
+    ])->onlyInput('email');
+})->name('login.v2.submit');
+
+// V2 Doctor Login
+Route::get('/v2/doctor/login', function () {
+    return view('NewUI.doctor.login_v2');
+})->name('doctor.login.v2');
+
+Route::post('/v2/doctor/login', function (\Illuminate\Http\Request $request) {
+    $credentials = $request->validate([
+        'email' => 'required|email',
+        'password' => 'required',
+    ]);
+
+    if (Auth::attempt($credentials)) {
+        $user = Auth::user();
+
+        if ($user->role !== 'doctor') {
+            Auth::logout();
+            return back()->withErrors([
+                'email' => 'This portal is for medical staff only. Please use the appropriate login portal.',
+            ])->onlyInput('email');
+        }
+
+        $request->session()->regenerate();
+        return redirect()->intended('/doctor/dashboard');
+    }
+
+    return back()->withErrors([
+        'email' => 'Invalid credentials.',
+    ])->onlyInput('email');
+})->name('doctor.login.v2.submit');
+
 // Login Routes
 Route::get('/login', function () {
     return view('login');
