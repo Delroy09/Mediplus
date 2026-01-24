@@ -22,6 +22,20 @@ Route::get('/', function () {
 Route::get('/contact', [ContactController::class, 'show'])->name('contact.show');
 Route::post('/contact', [ContactController::class, 'submit'])->name('contact.submit');
 
+// ============================================
+// V2 Routes (A/B Testing - New UI)
+// ============================================
+Route::get('/v2', function () {
+    return view('NewUI.home_v2');
+})->name('home.v2');
+
+Route::get('/v2/contact', function () {
+    return view('NewUI.contact_v2');
+})->name('contact.v2');
+
+// V2 Contact form submission (uses same controller)
+Route::post('/v2/contact', [ContactController::class, 'submit'])->name('contact.v2.submit');
+
 // Login Routes
 Route::get('/login', function () {
     return view('login');
