@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\Patient;
 use App\Models\User;
 use App\Models\Appointment;
+use App\Models\Doctor;
 
 class PatientController extends Controller
 {
@@ -15,16 +16,18 @@ class PatientController extends Controller
      */
     public function dashboard()
     {
-        // Temporary: Using first patient for testing (ID = 1)
-        $patient = Patient::with('user')->find(1);
+        // Get logged-in user's patient record
+        $user = Auth::user();
+        $patient = Patient::where('user_id', $user->id)->with(['user', 'doctors.user'])->first();
 
         if (!$patient) {
-            abort(404, 'Patient not found');
+            abort(404, 'Patient record not found');
         }
 
-        $user = $patient->user;
+        // Get assigned doctors
+        $assignedDoctors = $patient->doctors()->wherePivot('is_active', true)->with('user')->get();
 
-        return view('patient.dashboard', compact('user', 'patient'));
+        return view('patient.dashboard', compact('user', 'patient', 'assignedDoctors'));
     }
 
     /**
@@ -32,14 +35,12 @@ class PatientController extends Controller
      */
     public function profile()
     {
-        // Temporary: Using first patient for testing (ID = 1)
-        $patient = Patient::with('user')->find(1);
+        $user = Auth::user();
+        $patient = Patient::where('user_id', $user->id)->with('user')->first();
 
         if (!$patient) {
-            abort(404, 'Patient not found');
+            abort(404, 'Patient record not found');
         }
-
-        $user = $patient->user;
 
         return view('patient.profile', compact('user', 'patient'));
     }
@@ -86,14 +87,12 @@ class PatientController extends Controller
      */
     public function manage()
     {
-        // Temporary: Using first patient for testing (ID = 1)
-        $patient = Patient::with('user')->find(1);
+        $user = Auth::user();
+        $patient = Patient::where('user_id', $user->id)->with('user')->first();
 
         if (!$patient) {
-            abort(404, 'Patient not found');
+            abort(404, 'Patient record not found');
         }
-
-        $user = $patient->user;
 
         return view('patient.manage', compact('user', 'patient'));
     }

@@ -52,5 +52,33 @@
     <div class="info-row">
         <strong>Email Address:</strong> &nbsp; {{ $user->email ?? 'nds@gmail.com' }}
     </div>
+
+    <h5 class="mt-4 mb-3">Assigned Doctors</h5>
+    @if(isset($assignedDoctors) && $assignedDoctors->count() > 0)
+    <div class="table-responsive">
+        <table class="table table-sm table-bordered">
+            <thead>
+                <tr>
+                    <th>Doctor Name</th>
+                    <th>Specialization</th>
+                    <th>Department</th>
+                    <th>Consultation Hours</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach($assignedDoctors as $doctor)
+                <tr>
+                    <td>{{ $doctor->user->name }}</td>
+                    <td>{{ $doctor->specialization }}</td>
+                    <td>{{ $doctor->department }}</td>
+                    <td>{{ $doctor->consultation_hours }}</td>
+                </tr>
+                @endforeach
+            </tbody>
+        </table>
+    </div>
+    @else
+    <p class="text-muted">No doctors assigned yet.</p>
+    @endif
 </div>
 @endsection

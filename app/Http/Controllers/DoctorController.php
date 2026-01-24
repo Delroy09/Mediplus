@@ -17,17 +17,15 @@ class DoctorController extends Controller
      */
     public function dashboard()
     {
-        // Temporary: Using first doctor for testing (ID = 1)
-        $doctor = Doctor::with('user')->find(1);
+        $user = Auth::user();
+        $doctor = Doctor::where('user_id', $user->id)->with('user')->first();
 
         if (!$doctor) {
-            abort(404, 'Doctor not found');
+            abort(404, 'Doctor record not found');
         }
 
-        $user = $doctor->user;
-
         // Get assigned patients
-        $patients = $doctor->patients()->with('user')->get();
+        $patients = $doctor->patients()->wherePivot('is_active', true)->with('user')->get();
 
         // Statistics
         $stats = [
@@ -48,8 +46,8 @@ class DoctorController extends Controller
      */
     public function patients()
     {
-        // Temporary: Using first doctor for testing (ID = 1)
-        $doctor = Doctor::with('user')->find(1);
+        $user = Auth::user();
+        $doctor = Doctor::where('user_id', $user->id)->with('user')->first();
 
         if (!$doctor) {
             abort(404, 'Doctor not found');
