@@ -60,11 +60,43 @@ Route::post('/logout', function (\Illuminate\Http\Request $request) {
     return redirect()->route('login');
 })->name('logout');
 
+// Doctor Login Portal (Separate from patient login)
+Route::get('/doctor/login', function () {
+    return view('doctor.login');
+})->name('doctor.login');
+
+Route::post('/doctor/login', function (\Illuminate\Http\Request $request) {
+    $credentials = $request->validate([
+        'email' => 'required|email',
+        'password' => 'required',
+    ]);
+
+    if (Auth::attempt($credentials)) {
+        $user = Auth::user();
+
+        // Only allow doctors to login through this portal
+        if ($user->role !== 'doctor') {
+            Auth::logout();
+            return back()->withErrors([
+                'email' => 'This portal is for medical staff only. Please use the appropriate login portal.',
+            ])->onlyInput('email');
+        }
+
+        $request->session()->regenerate();
+        return redirect()->intended('/doctor/dashboard');
+    }
+
+    return back()->withErrors([
+        'email' => 'Invalid credentials.',
+    ])->onlyInput('email');
+})->name('doctor.login.submit');
+
 // Admin Routes (Open for testing - no auth required)
 Route::prefix('admin')->name('admin.')->group(function () {
     Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('dashboard');
     Route::post('/approve/{id}', [AdminController::class, 'approveRequest'])->name('approve');
     Route::post('/reject/{id}', [AdminController::class, 'rejectRequest'])->name('reject');
+    Route::post('/reassign-doctor/{id}', [AdminController::class, 'reassignDoctor'])->name('reassign-doctor');
 });
 
 // Patient Routes (Protected)

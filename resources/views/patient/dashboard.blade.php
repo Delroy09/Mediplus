@@ -40,10 +40,11 @@
 
     <div class="info-row">
         <strong>Status:</strong> &nbsp;
-        <span class="badge 
-            @if($patient->status ?? 'Discharged' === 'Admitted') bg-success
-            @elseif($patient->status ?? 'Discharged' === 'Surgery') bg-warning
-            @else bg-info
+        <span class="badge
+            @if(($patient->status ?? 'Discharged') === 'Admitted') status-admitted
+            @elseif(($patient->status ?? 'Discharged') === 'Surgery') status-surgery
+            @elseif(($patient->status ?? 'Discharged') === 'Discharged') status-discharged
+            @else status-admitted
             @endif">
             {{ $patient->status ?? 'Discharged' }}
         </span>

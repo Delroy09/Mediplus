@@ -13,9 +13,8 @@
         <p class="mb-2" style="font-size: 1.25rem; color: var(--text-primary);">Advanced Patient Management System</p>
         <p class="mb-5" style="font-size: 1.1rem; color: var(--text-secondary); max-width: 600px; margin-left: auto; margin-right: auto;">Bridging the gap between Doctors, Patients & Administration</p>
 
-        <div class="d-flex justify-content-center gap-3 flex-wrap">
+        <div class="d-flex justify-content-center">
             <a href="{{ url('/contact') }}" class="btn btn-primary btn-lg" aria-label="Apply for a new account">Apply Now</a>
-            <a href="{{ route('login') }}" class="btn btn-outline-primary btn-lg" aria-label="Staff login page">Staff Login</a>
         </div>
     </div>
 </section>

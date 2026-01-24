@@ -121,6 +121,21 @@
             margin-right: 5px;
         }
 
+        .status-admitted {
+            background-color: #4491C0;
+            color: #ffffff;
+        }
+
+        .status-surgery {
+            background-color: #EAA800;
+            color: #ffffff;
+        }
+
+        .status-discharged {
+            background-color: #5DCD98;
+            color: #ffffff;
+        }
+
         @media (max-width: 768px) {
             .dashboard-sidebar {
                 width: 100%;
