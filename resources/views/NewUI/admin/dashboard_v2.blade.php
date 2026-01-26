@@ -41,22 +41,19 @@
 
 @section('content')
 <!-- Welcome Card -->
-<div class="card-v2" style="margin-bottom: 1.5rem; background: linear-gradient(135deg, var(--primary-teal), #2a6b6b); color: white;">
+<div class="card-v2 mb-4" style="background: linear-gradient(135deg, var(--primary-teal), #2a6b6b); color: white;">
     <div class="card-body">
-        <h4 style="margin: 0 0 0.5rem 0; font-weight: 600;">Welcome, Administrator!</h4>
-        <p style="margin: 0; opacity: 0.9;">Manage doctors, patients, and assignments from this dashboard.</p>
+        <h4 style="margin: 0 0 0.5rem 0; font-weight: 600; color: black;">Welcome, Administrator!</h4>
+        <p style="margin: 0; opacity: 0.9; color: black;">Manage doctors, patients, and assignments from this dashboard.</p>
     </div>
 </div>
 
 <!-- Stats Row -->
-<div class="row g-4" style="margin-bottom: 1.5rem;">
+<div class="row g-4 mb-4">
     <div class="col-md-3">
         <div class="stat-card">
-            <div class="stat-icon" style="background: rgba(61, 139, 139, 0.1);">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--primary-teal)" stroke-width="2">
-                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
-                    <circle cx="12" cy="7" r="4"></circle>
-                </svg>
+            <div class="stat-icon" style="background: rgba(61, 139, 139, 0.1); color: var(--primary-teal); font-size: 24px;">
+                👨‍⚕️
             </div>
             <div class="stat-content">
                 <div class="stat-value">{{ $totalDoctors ?? 0 }}</div>
@@ -113,7 +110,7 @@
 
 <!-- Pending Requests -->
 @if(isset($pendingDeletionRequests) && count($pendingDeletionRequests) > 0)
-<div class="card-v2" style="margin-bottom: 1.5rem; border-left: 4px solid #f59e0b;">
+<div class="card-v2 mb-4" style="border-left: 4px solid #f59e0b;">
     <div class="card-header">
         <h5 style="margin: 0; font-weight: 600;">⚠️ Pending Deletion Requests</h5>
     </div>
@@ -156,7 +153,7 @@
 @endif
 
 <!-- Recent Doctors -->
-<div class="card-v2" style="margin-bottom: 1.5rem;">
+<div class="card-v2 mb-4">
     <div class="card-header" style="display: flex; justify-content: space-between; align-items: center;">
         <h5 style="margin: 0; font-weight: 600;">Recent Doctors</h5>
         <a href="{{ route('admin.doctors.v2') }}" class="btn-v2 btn-v2-secondary btn-v2-sm">View All</a>

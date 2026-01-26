@@ -41,7 +41,7 @@
 
 @section('content')
 <!-- Status Filter -->
-<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
+<div class="mb-4" style="display: flex; justify-content: space-between; align-items: center;">
     <div style="display: flex; gap: 0.5rem;">
         <a href="{{ route('admin.patients.v2') }}" class="btn-v2 {{ !request('status') ? 'btn-v2-primary' : 'btn-v2-secondary' }} btn-v2-sm">All</a>
         <a href="{{ route('admin.patients.v2', ['status' => 'Admitted']) }}" class="btn-v2 {{ request('status') === 'Admitted' ? 'btn-v2-primary' : 'btn-v2-secondary' }} btn-v2-sm">Admitted</a>

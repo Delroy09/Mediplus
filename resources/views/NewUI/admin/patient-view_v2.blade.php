@@ -41,14 +41,14 @@
 
 @section('content')
 <!-- Back Button -->
-<div style="margin-bottom: 1.5rem;">
+<div class="mb-4">
     <a href="{{ route('admin.patients.v2') }}" class="btn-v2 btn-v2-secondary">
         ← Back to Patients
     </a>
 </div>
 
 <!-- Patient Info Card -->
-<div class="card-v2" style="margin-bottom: 1.5rem;">
+<div class="card-v2 mb-4">
     <div class="card-header" style="display: flex; justify-content: space-between; align-items: center;">
         <h5 style="margin: 0; font-weight: 600;">Patient Information</h5>
         <a href="{{ route('admin.patient.assign.v2', $patient->id) }}" class="btn-v2 btn-v2-primary btn-v2-sm">Assign Doctor</a>
@@ -105,7 +105,7 @@
 </div>
 
 <!-- Assigned Doctors -->
-<div class="card-v2" style="margin-bottom: 1.5rem;">
+<div class="card-v2 mb-4">
     <div class="card-header">
         <h5 style="margin: 0; font-weight: 600;">Assigned Doctors</h5>
     </div>
@@ -118,7 +118,7 @@
                         <th>Doctor Name</th>
                         <th>Specialization</th>
                         <th>Department</th>
-                        <th>Phone</th>
+                        <th>Experience</th>
                         <th>Actions</th>
                     </tr>
                 </thead>
@@ -135,7 +135,7 @@
                         </td>
                         <td>{{ $doctor->specialization ?? 'N/A' }}</td>
                         <td>{{ $doctor->department ?? 'N/A' }}</td>
-                        <td>{{ $doctor->phone ?? 'N/A' }}</td>
+                        <td>{{ $doctor->years_of_experience ?? 0 }} yrs</td>
                         <td>
                             <a href="{{ route('admin.doctor.view.v2', $doctor->id) }}" class="btn-v2 btn-v2-primary btn-v2-sm">View</a>
                         </td>

@@ -228,11 +228,11 @@ class AdminController extends Controller
         $validated = $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|email|unique:users,email,' . $doctor->user_id,
-            'phone' => 'nullable|string|max:20',
             'specialization' => 'required|string|max:255',
             'department' => 'nullable|string|max:255',
             'qualification' => 'nullable|string|max:255',
             'experience' => 'nullable|integer|min:0',
+            'consultation_hours' => 'nullable|string|max:100',
         ]);
 
         DB::transaction(function () use ($doctor, $validated) {
@@ -242,11 +242,11 @@ class AdminController extends Controller
             ]);
 
             $doctor->update([
-                'phone' => $validated['phone'],
                 'specialization' => $validated['specialization'],
                 'department' => $validated['department'],
                 'qualification' => $validated['qualification'],
-                'experience' => $validated['experience'],
+                'years_of_experience' => $validated['experience'],
+                'consultation_hours' => $validated['consultation_hours'],
             ]);
         });
 
@@ -270,11 +270,11 @@ class AdminController extends Controller
             'name' => 'required|string|max:255',
             'email' => 'required|email|unique:users,email',
             'password' => 'required|string|min:8|confirmed',
-            'phone' => 'nullable|string|max:20',
             'specialization' => 'required|string|max:255',
             'department' => 'nullable|string|max:255',
             'qualification' => 'nullable|string|max:255',
             'experience' => 'nullable|integer|min:0',
+            'consultation_hours' => 'nullable|string|max:100',
         ]);
 
         DB::transaction(function () use ($validated) {
@@ -287,11 +287,11 @@ class AdminController extends Controller
 
             Doctor::create([
                 'user_id' => $user->id,
-                'phone' => $validated['phone'],
                 'specialization' => $validated['specialization'],
                 'department' => $validated['department'],
                 'qualification' => $validated['qualification'],
-                'experience' => $validated['experience'],
+                'years_of_experience' => $validated['experience'],
+                'consultation_hours' => $validated['consultation_hours'],
             ]);
         });
 
@@ -412,13 +412,11 @@ class AdminController extends Controller
             ->get();
 
         $doctors = Doctor::with('user')->get();
-        $unassignedPatients = Patient::with('user')
-            ->whereDoesntHave('doctors', function ($q) {
-                $q->wherePivot('is_active', true);
-            })
-            ->get();
 
-        return view('NewUI.admin.assignments_v2', compact('assignments', 'doctors', 'unassignedPatients'));
+        // Get all patients (not just unassigned ones) - admin can create multiple assignments
+        $patients = Patient::with('user')->get();
+
+        return view('NewUI.admin.assignments_v2', compact('assignments', 'doctors', 'patients'));
     }
 
     /**

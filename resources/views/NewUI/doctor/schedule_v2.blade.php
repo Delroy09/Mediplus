@@ -43,7 +43,7 @@
 
 @section('content')
 <!-- Schedule Stats -->
-<div class="row g-4" style="margin-bottom: 1.5rem;">
+<div class="row g-4 mb-4">
     <div class="col-md-3">
         <div class="stat-card">
             <div class="stat-icon" style="background: rgba(61, 139, 139, 0.1);">
@@ -106,7 +106,7 @@
 </div>
 
 <!-- Today's Appointments -->
-<div class="card-v2" style="margin-bottom: 1.5rem;">
+<div class="card-v2 mb-4">
     <div class="card-header">
         <h5 style="margin: 0; font-weight: 600;">Today's Appointments</h5>
     </div>

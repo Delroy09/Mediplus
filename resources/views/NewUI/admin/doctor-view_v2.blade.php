@@ -41,7 +41,7 @@
 
 @section('content')
 <!-- Back Button -->
-<div style="margin-bottom: 1.5rem;">
+<div class="mb-4">
     <a href="{{ route('admin.doctors.v2') }}" class="btn-v2 btn-v2-secondary">
         ← Back to Doctors
     </a>
@@ -83,8 +83,8 @@
                             <p>{{ $doctor->user->email ?? 'N/A' }}</p>
                         </div>
                         <div class="info-group">
-                            <label>Phone Number</label>
-                            <p>{{ $doctor->phone ?? 'Not provided' }}</p>
+                            <label>Consultation Hours</label>
+                            <p>{{ $doctor->consultation_hours ?? 'Not specified' }}</p>
                         </div>
                     </div>
                     <div class="col-md-6">

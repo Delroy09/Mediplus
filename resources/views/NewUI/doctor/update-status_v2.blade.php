@@ -50,7 +50,7 @@
 </div>
 
 <!-- Patient Summary -->
-<div class="card-v2" style="margin-bottom: 1.5rem;">
+<div class="card-v2 mb-4">
     <div class="card-body">
         <div style="display: flex; align-items: center; gap: 1rem;">
             <div style="width: 60px; height: 60px; background: var(--bg-cream); border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; font-weight: 600;">
@@ -80,13 +80,13 @@
     </div>
     <div class="card-body">
         @if(session('success'))
-        <div class="alert alert-success" style="background: #d4edda; border: 1px solid #c3e6cb; color: #155724; padding: 1rem; border-radius: 8px; margin-bottom: 1.5rem;">
+        <div class="alert alert-success mb-4" style="background: #d4edda; border: 1px solid #c3e6cb; color: #155724; padding: 1rem; border-radius: 8px;">
             {{ session('success') }}
         </div>
         @endif
 
         @if(session('error'))
-        <div class="alert alert-danger" style="background: #f8d7da; border: 1px solid #f5c6cb; color: #721c24; padding: 1rem; border-radius: 8px; margin-bottom: 1.5rem;">
+        <div class="alert alert-danger mb-4" style="background: #f8d7da; border: 1px solid #f5c6cb; color: #721c24; padding: 1rem; border-radius: 8px;">
             {{ session('error') }}
         </div>
         @endif

@@ -41,7 +41,7 @@
 
 @section('content')
 <!-- Action Bar -->
-<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
+<div class="mb-4" style="display: flex; justify-content: space-between; align-items: center;">
     <div>
         <p style="margin: 0; color: var(--text-muted);">{{ $doctors->count() ?? 0 }} doctors registered</p>
     </div>
@@ -65,7 +65,7 @@
                         <th>Email</th>
                         <th>Specialization</th>
                         <th>Department</th>
-                        <th>Phone</th>
+                        <th>Experience</th>
                         <th>Patients</th>
                         <th>Actions</th>
                     </tr>
@@ -87,7 +87,7 @@
                         <td>{{ $doctor->user->email ?? 'N/A' }}</td>
                         <td>{{ $doctor->specialization ?? 'N/A' }}</td>
                         <td>{{ $doctor->department ?? 'N/A' }}</td>
-                        <td>{{ $doctor->phone ?? 'N/A' }}</td>
+                        <td>{{ $doctor->years_of_experience ?? 0 }} yrs</td>
                         <td>
                             <span class="badge-v2 badge-admitted">{{ $doctor->patients_count ?? 0 }}</span>
                         </td>

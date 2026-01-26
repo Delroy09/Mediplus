@@ -41,14 +41,14 @@
 
 @section('content')
 <!-- Back Button -->
-<div style="margin-bottom: 1.5rem;">
+<div class="mb-4">
     <a href="{{ route('admin.patient.view.v2', $patient->id) }}" class="btn-v2 btn-v2-secondary">
         ← Back to Patient Details
     </a>
 </div>
 
 <!-- Patient Summary -->
-<div class="card-v2" style="margin-bottom: 1.5rem;">
+<div class="card-v2 mb-4">
     <div class="card-body">
         <div style="display: flex; align-items: center; gap: 1rem;">
             <div style="width: 60px; height: 60px; background: var(--bg-cream); border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; font-weight: 600;">

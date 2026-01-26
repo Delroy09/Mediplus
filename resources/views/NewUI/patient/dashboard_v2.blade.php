@@ -96,31 +96,33 @@
     </div>
     <div class="card-body" style="padding: 0;">
         @if(isset($assignedDoctors) && $assignedDoctors->count() > 0)
-        <table class="table-v2">
-            <thead>
-                <tr>
-                    <th>Doctor Name</th>
-                    <th>Specialization</th>
-                    <th>Department</th>
-                    <th>Consultation Hours</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach($assignedDoctors as $doctor)
-                <tr>
-                    <td>
-                        <div style="display: flex; align-items: center; gap: 0.75rem;">
-                            <div style="width: 36px; height: 36px; background: var(--primary-light); border-radius: 8px; display: flex; align-items: center; justify-content: center; color: var(--primary);">👨‍⚕️</div>
-                            <span style="font-weight: 500;">Dr. {{ $doctor->user->name }}</span>
-                        </div>
-                    </td>
-                    <td>{{ $doctor->specialization }}</td>
-                    <td>{{ $doctor->department }}</td>
-                    <td>{{ $doctor->consultation_hours }}</td>
-                </tr>
-                @endforeach
-            </tbody>
-        </table>
+        <div class="scrollable-table">
+            <table class="table-v2">
+                <thead>
+                    <tr>
+                        <th>Doctor Name</th>
+                        <th>Specialization</th>
+                        <th>Department</th>
+                        <th>Consultation Hours</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach($assignedDoctors as $doctor)
+                    <tr>
+                        <td>
+                            <div style="display: flex; align-items: center; gap: 0.75rem;">
+                                <div style="width: 36px; height: 36px; background: var(--primary-light); border-radius: 8px; display: flex; align-items: center; justify-content: center; color: var(--primary);">👨‍⚕️</div>
+                                <span style="font-weight: 500;">Dr. {{ $doctor->user->name }}</span>
+                            </div>
+                        </td>
+                        <td>{{ $doctor->specialization }}</td>
+                        <td>{{ $doctor->department }}</td>
+                        <td>{{ $doctor->consultation_hours }}</td>
+                    </tr>
+                    @endforeach
+                </tbody>
+            </table>
+        </div>
         @else
         <div class="empty-state">
             <div class="empty-state-icon">👨‍⚕️</div>

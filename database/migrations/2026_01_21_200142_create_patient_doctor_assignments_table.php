@@ -22,8 +22,8 @@ return new class extends Migration
             $table->text('notes')->nullable();
             $table->timestamps();
 
-            // Prevent duplicate active assignments
-            $table->unique(['patient_id', 'doctor_id', 'is_active'], 'unique_active_assignment');
+            // 1 patient can only have 1 active doctor at a time
+            $table->unique(['patient_id', 'is_active'], 'unique_patient_active_doctor');
         });
     }
 

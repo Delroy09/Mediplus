@@ -13,7 +13,7 @@ class Doctor extends Model
         'license_number',
         'qualification',
         'years_of_experience',
-        'consultation_hours'
+        'consultation_hours',
     ];
 
     public function user()

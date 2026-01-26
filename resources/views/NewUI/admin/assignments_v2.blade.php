@@ -41,19 +41,19 @@
 
 @section('content')
 @if(session('success'))
-<div class="alert alert-success" style="background: #d4edda; border: 1px solid #c3e6cb; color: #155724; padding: 1rem; border-radius: 8px; margin-bottom: 1.5rem;">
+<div class="alert alert-success mb-4" style="background: #d4edda; border: 1px solid #c3e6cb; color: #155724; padding: 1rem; border-radius: 8px;">
     {{ session('success') }}
 </div>
 @endif
 
 @if(session('error'))
-<div class="alert alert-danger" style="background: #f8d7da; border: 1px solid #f5c6cb; color: #721c24; padding: 1rem; border-radius: 8px; margin-bottom: 1.5rem;">
+<div class="alert alert-danger mb-4" style="background: #f8d7da; border: 1px solid #f5c6cb; color: #721c24; padding: 1rem; border-radius: 8px;">
     {{ session('error') }}
 </div>
 @endif
 
 <!-- New Assignment Form -->
-<div class="card-v2" style="margin-bottom: 1.5rem;">
+<div class="card-v2 mb-4">
     <div class="card-header">
         <h5 style="margin: 0; font-weight: 600;">Create New Assignment</h5>
     </div>
@@ -62,7 +62,7 @@
             @csrf
             <div class="row g-3 align-items-end">
                 <div class="col-md-4">
-                    <div class="form-group-v2" style="margin-bottom: 0;">
+                    <div class="form-group-v2" style="margin-bottom: 12px;">
                         <label class="form-label-v2" for="doctor_id">Select Doctor</label>
                         <select class="form-control-v2" id="doctor_id" name="doctor_id" required>
                             <option value="">-- Select Doctor --</option>
@@ -73,18 +73,18 @@
                     </div>
                 </div>
                 <div class="col-md-4">
-                    <div class="form-group-v2" style="margin-bottom: 0;">
-                        <label class="form-label-v2" for="patient_id">Select Patient</label>
+                    <div class="form-group-v2" style="margin-bottom: 24px;">
+                        <label class="form-label-v2" for="patient_id">Select Patient: </label>
                         <select class="form-control-v2" id="patient_id" name="patient_id" required>
                             <option value="">-- Select Patient --</option>
-                            @foreach($unassignedPatients ?? [] as $patient)
+                            @foreach($patients ?? [] as $patient)
                             <option value="{{ $patient->id }}">{{ $patient->user->name ?? 'Unknown' }} - {{ $patient->blood_group ?? 'N/A' }}</option>
                             @endforeach
                         </select>
                     </div>
                 </div>
                 <div class="col-md-4">
-                    <button type="submit" class="btn-v2 btn-v2-primary" style="width: 100%;">
+                    <button type="submit" class="btn-v2 btn-v2-primary" style="padding: 14px; margin-bottom:18px;">
                         Create Assignment
                     </button>
                 </div>

@@ -41,7 +41,7 @@
 
 @section('content')
 <!-- Back Button -->
-<div style="margin-bottom: 1.5rem;">
+<div class="mb-4">
     <a href="{{ route('admin.doctor.view.v2', $doctor->id) }}" class="btn-v2 btn-v2-secondary">
         ← Back to Doctor Details
     </a>
@@ -93,9 +93,9 @@
             <div class="row">
                 <div class="col-md-6">
                     <div class="form-group-v2">
-                        <label class="form-label-v2" for="phone">Phone Number</label>
-                        <input type="text" class="form-control-v2" id="phone" name="phone" value="{{ old('phone', $doctor->phone ?? '') }}" placeholder="e.g., +1234567890">
-                        @error('phone')
+                        <label class="form-label-v2" for="consultation_hours">Consultation Hours</label>
+                        <input type="text" class="form-control-v2" id="consultation_hours" name="consultation_hours" value="{{ old('consultation_hours', $doctor->consultation_hours ?? '') }}" placeholder="e.g., 9AM - 5PM">
+                        @error('consultation_hours')
                         <span class="text-danger" style="font-size: 0.875rem; color: #dc3545;">{{ $message }}</span>
                         @enderror
                     </div>

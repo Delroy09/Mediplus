@@ -43,14 +43,14 @@
 
 @section('content')
 <!-- Back Button -->
-<div style="margin-bottom: 1.5rem;">
+<div class="mb-4">
     <a href="{{ route('doctor.patients.v2') }}" class="btn-v2 btn-v2-secondary">
         ← Back to Patients
     </a>
 </div>
 
 <!-- Patient Info Card -->
-<div class="card-v2" style="margin-bottom: 1.5rem;">
+<div class="card-v2 mb-4">
     <div class="card-header">
         <h5 style="margin: 0; font-weight: 600;">Patient Information</h5>
     </div>
@@ -105,7 +105,7 @@
 </div>
 
 <!-- Action Buttons -->
-<div style="display: flex; gap: 1rem; margin-bottom: 1.5rem;">
+<div class="mb-4" style="display: flex; gap: 1rem;">
     <a href="{{ route('doctor.patient.update-status.v2', $patient->id) }}" class="btn-v2 btn-v2-primary">
         Update Status
     </a>
