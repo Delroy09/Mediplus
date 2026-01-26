@@ -87,7 +87,7 @@
                 </svg>
             </div>
             <div class="stat-content">
-                <div class="stat-value">{{ $pendingRequests ?? 0 }}</div>
+                <div class="stat-value">{{ $pendingRequestsCount ?? 0 }}</div>
                 <div class="stat-label">Pending Requests</div>
             </div>
         </div>
@@ -108,7 +108,64 @@
     </div>
 </div>
 
-<!-- Pending Requests -->
+<!-- Pending Account Requests (New Patient Registrations) -->
+@if(isset($pendingRequests) && count($pendingRequests) > 0)
+<div class="card-v2 mb-4">
+    <div class="card-header">
+        <h5 style="margin: 0; font-weight: 600;">Pending Account Requests</h5>
+    </div>
+    <div class="card-body" style="padding: 0;">
+        <div class="scrollable-table">
+            <table class="table-v2">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Blood Group</th>
+                        <th>Gender</th>
+                        <th>Requested On</th>
+                        <th>Assign Doctor</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach($pendingRequests as $request)
+                    <tr>
+                        <td style="font-weight: 500;">{{ $request->name }}</td>
+                        <td>{{ $request->email }}</td>
+                        <td>{{ $request->blood_group ?? 'N/A' }}</td>
+                        <td>{{ ucfirst($request->gender ?? 'N/A') }}</td>
+                        <td>{{ \Carbon\Carbon::parse($request->created_at)->format('M d, Y') }}</td>
+                        <td>
+                            <form action="{{ route('admin.approve', $request->id) }}" method="POST" id="approveForm{{ $request->id }}">
+                                @csrf
+                                <select name="doctor_id" class="form-control-v2" style="min-width: 150px; padding: 0.5rem;" required>
+                                    <option value="">Select Doctor</option>
+                                    @foreach($doctors as $doctor)
+                                    <option value="{{ $doctor->id }}">Dr. {{ $doctor->user->name ?? 'Unknown' }}</option>
+                                    @endforeach
+                                </select>
+                            </form>
+                        </td>
+                        <td>
+                            <div class="d-flex gap-2">
+                                <button type="submit" form="approveForm{{ $request->id }}" class="btn-v2 btn-v2-primary btn-v2-sm" onclick="return confirm('Approve this request?')">Approve</button>
+                                <form action="{{ route('admin.reject', $request->id) }}" method="POST" style="display: inline;">
+                                    @csrf
+                                    <button type="submit" class="btn-v2 btn-v2-danger btn-v2-sm" onclick="return confirm('Reject this request?')">Reject</button>
+                                </form>
+                            </div>
+                        </td>
+                    </tr>
+                    @endforeach
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+@endif
+
+<!-- Pending Deletion Requests -->
 @if(isset($pendingDeletionRequests) && count($pendingDeletionRequests) > 0)
 <div class="card-v2 mb-4" style="border-left: 4px solid #f59e0b;">
     <div class="card-header">

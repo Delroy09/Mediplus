@@ -153,8 +153,14 @@ class AdminController extends Controller
     {
         $totalDoctors = Doctor::count();
         $totalPatients = Patient::count();
-        $pendingRequests = AccountRequest::where('status', 'pending')->count();
+        $pendingRequestsCount = AccountRequest::where('status', 'pending')->count();
         $totalAssignments = \App\Models\PatientDoctorAssignment::where('is_active', true)->count();
+
+        // Pending account requests (patients waiting for approval)
+        $pendingRequests = AccountRequest::where('status', 'pending')->get();
+
+        // Get doctors for assignment dropdown
+        $doctors = Doctor::with('user')->get();
 
         $pendingDeletionRequests = collect([]); // TODO: Implement deletion requests table
 
@@ -176,8 +182,10 @@ class AdminController extends Controller
         return view('NewUI.admin.dashboard_v2', compact(
             'totalDoctors',
             'totalPatients',
-            'pendingRequests',
+            'pendingRequestsCount',
             'totalAssignments',
+            'pendingRequests',
+            'doctors',
             'pendingDeletionRequests',
             'recentDoctors',
             'recentPatients'
