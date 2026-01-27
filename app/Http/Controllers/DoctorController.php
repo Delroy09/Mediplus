@@ -202,7 +202,7 @@ class DoctorController extends Controller
             'total_records' => MedicalRecord::where('doctor_id', $doctor->id)->count()
         ];
 
-        return view('NewUI.doctor.dashboard_v2', compact('user', 'stats', 'patients'));
+        return view('doctor.dashboard_v2', compact('user', 'stats', 'patients'));
     }
 
     /**
@@ -220,7 +220,7 @@ class DoctorController extends Controller
         $user = $doctor->user;
         $patients = $doctor->patients()->with('user')->get();
 
-        return view('NewUI.doctor.patients_v2', compact('user', 'patients'));
+        return view('doctor.patients_v2', compact('user', 'patients'));
     }
 
     /**
@@ -241,7 +241,7 @@ class DoctorController extends Controller
             ->orderBy('visit_date', 'desc')
             ->get();
 
-        return view('NewUI.doctor.patient-details_v2', compact('user', 'patient', 'medicalRecords'));
+        return view('doctor.patient-details_v2', compact('user', 'patient', 'medicalRecords'));
     }
 
     /**
@@ -258,7 +258,7 @@ class DoctorController extends Controller
 
         $patient = Patient::with('user')->findOrFail($id);
 
-        return view('NewUI.doctor.update-status_v2', compact('user', 'patient'));
+        return view('doctor.update-status_v2', compact('user', 'patient'));
     }
 
     /**
@@ -275,7 +275,7 @@ class DoctorController extends Controller
 
         $patient = Patient::with('user')->findOrFail($patientId);
 
-        return view('NewUI.doctor.create-medical-record_v2', compact('user', 'patient'));
+        return view('doctor.create-medical-record_v2', compact('user', 'patient'));
     }
 
     /**
@@ -306,7 +306,7 @@ class DoctorController extends Controller
         $completedAppointments = $appointments->where('status', 'completed')->count();
         $cancelledAppointments = $appointments->where('status', 'cancelled')->count();
 
-        return view('NewUI.doctor.schedule_v2', compact(
+        return view('doctor.schedule_v2', compact(
             'user',
             'appointments',
             'todaySchedule',
@@ -336,7 +336,7 @@ class DoctorController extends Controller
             ->where('appointment_date', '>=', now())
             ->count();
 
-        return view('NewUI.doctor.profile_v2', compact(
+        return view('doctor.profile_v2', compact(
             'user',
             'doctor',
             'totalPatients',
@@ -363,7 +363,7 @@ class DoctorController extends Controller
             'last_visited_date' => $validated['last_visited_date'] ?? $patient->last_visited_date
         ]);
 
-        return redirect()->route('doctor.patient.view.v2', $id)->with('success', 'Patient status updated successfully!');
+        return redirect()->route('doctor.patient.view', $id)->with('success', 'Patient status updated successfully!');
     }
 
     /**
@@ -400,6 +400,6 @@ class DoctorController extends Controller
             'notes' => $validated['notes'],
         ]);
 
-        return redirect()->route('doctor.patient.view.v2', $patientId)->with('success', 'Medical record added successfully!');
+        return redirect()->route('doctor.patient.view', $patientId)->with('success', 'Medical record added successfully!');
     }
 }

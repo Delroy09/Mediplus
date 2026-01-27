@@ -179,7 +179,7 @@ class AdminController extends Controller
             ->take(5)
             ->get();
 
-        return view('NewUI.admin.dashboard_v2', compact(
+        return view('admin.dashboard_v2', compact(
             'totalDoctors',
             'totalPatients',
             'pendingRequestsCount',
@@ -203,7 +203,7 @@ class AdminController extends Controller
             }])
             ->get();
 
-        return view('NewUI.admin.doctors_v2', compact('doctors'));
+        return view('admin.doctors_v2', compact('doctors'));
     }
 
     /**
@@ -213,7 +213,7 @@ class AdminController extends Controller
     {
         $doctor = Doctor::with(['user', 'patients.user'])->findOrFail($id);
 
-        return view('NewUI.admin.doctor-view_v2', compact('doctor'));
+        return view('admin.doctor-view_v2', compact('doctor'));
     }
 
     /**
@@ -223,7 +223,7 @@ class AdminController extends Controller
     {
         $doctor = Doctor::with('user')->findOrFail($id);
 
-        return view('NewUI.admin.doctor-edit_v2', compact('doctor'));
+        return view('admin.doctor-edit_v2', compact('doctor'));
     }
 
     /**
@@ -258,7 +258,7 @@ class AdminController extends Controller
             ]);
         });
 
-        return redirect()->route('admin.doctor.view.v2', $id)->with('success', 'Doctor updated successfully.');
+        return redirect()->route('admin.doctor.view', $id)->with('success', 'Doctor updated successfully.');
     }
 
     /**
@@ -266,7 +266,7 @@ class AdminController extends Controller
      */
     public function createDoctorV2()
     {
-        return view('NewUI.admin.doctor-create_v2');
+        return view('admin.doctor-create_v2');
     }
 
     /**
@@ -303,7 +303,7 @@ class AdminController extends Controller
             ]);
         });
 
-        return redirect()->route('admin.doctors.v2')->with('success', 'Doctor account created successfully.');
+        return redirect()->route('admin.doctors')->with('success', 'Doctor account created successfully.');
     }
 
     /**
@@ -324,7 +324,7 @@ class AdminController extends Controller
             User::where('id', $doctor->user_id)->delete();
         });
 
-        return redirect()->route('admin.doctors.v2')->with('success', 'Doctor deleted successfully.');
+        return redirect()->route('admin.doctors')->with('success', 'Doctor deleted successfully.');
     }
 
     /**
@@ -342,7 +342,7 @@ class AdminController extends Controller
 
         $patients = $query->get();
 
-        return view('NewUI.admin.patients_v2', compact('patients'));
+        return view('admin.patients_v2', compact('patients'));
     }
 
     /**
@@ -356,7 +356,7 @@ class AdminController extends Controller
             ->latest()
             ->get();
 
-        return view('NewUI.admin.patient-view_v2', compact('patient', 'medicalRecords'));
+        return view('admin.patient-view_v2', compact('patient', 'medicalRecords'));
     }
 
     /**
@@ -373,7 +373,7 @@ class AdminController extends Controller
 
         $assignedDoctorIds = $patient->doctors()->wherePivot('is_active', true)->pluck('doctors.id')->toArray();
 
-        return view('NewUI.admin.patient-assign_v2', compact('patient', 'doctors', 'assignedDoctorIds'));
+        return view('admin.patient-assign_v2', compact('patient', 'doctors', 'assignedDoctorIds'));
     }
 
     /**
@@ -406,7 +406,7 @@ class AdminController extends Controller
             'notes' => 'Assigned by admin',
         ]);
 
-        return redirect()->route('admin.patient.view.v2', $id)->with('success', 'Doctor assigned successfully.');
+        return redirect()->route('admin.patient.view', $id)->with('success', 'Doctor assigned successfully.');
     }
 
     /**
@@ -424,7 +424,7 @@ class AdminController extends Controller
         // Get all patients (not just unassigned ones) - admin can create multiple assignments
         $patients = Patient::with('user')->get();
 
-        return view('NewUI.admin.assignments_v2', compact('assignments', 'doctors', 'patients'));
+        return view('admin.assignments_v2', compact('assignments', 'doctors', 'patients'));
     }
 
     /**

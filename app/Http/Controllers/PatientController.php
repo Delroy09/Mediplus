@@ -134,7 +134,7 @@ class PatientController extends Controller
 
         $assignedDoctors = $patient->doctors()->wherePivot('is_active', true)->with('user')->get();
 
-        return view('NewUI.patient.dashboard_v2', compact('user', 'patient', 'assignedDoctors'));
+        return view('patient.dashboard_v2', compact('user', 'patient', 'assignedDoctors'));
     }
 
     /**
@@ -149,7 +149,7 @@ class PatientController extends Controller
             abort(404, 'Patient record not found');
         }
 
-        return view('NewUI.patient.profile_v2', compact('user', 'patient'));
+        return view('patient.profile_v2', compact('user', 'patient'));
     }
 
     /**
@@ -168,7 +168,7 @@ class PatientController extends Controller
             ->orderBy('appointment_date', 'desc')
             ->get();
 
-        return view('NewUI.patient.schedule_v2', compact('user', 'appointments'));
+        return view('patient.schedule_v2', compact('user', 'appointments'));
     }
 
     /**
@@ -183,7 +183,7 @@ class PatientController extends Controller
             abort(404, 'Patient record not found');
         }
 
-        return view('NewUI.patient.manage_v2', compact('user', 'patient'));
+        return view('patient.manage_v2', compact('user', 'patient'));
     }
 
     /**
@@ -204,7 +204,7 @@ class PatientController extends Controller
             ]);
         }
 
-        return redirect()->route('patient.profile.v2')->with('success', 'Profile updated successfully!');
+        return redirect()->route('patient.profile')->with('success', 'Profile updated successfully!');
     }
 
     /**
@@ -223,7 +223,7 @@ class PatientController extends Controller
         //     'status' => 'pending'
         // ]);
 
-        return redirect()->route('patient.manage.v2')->with('success', 'Deletion request submitted. IT admin will review shortly.');
+        return redirect()->route('patient.manage')->with('success', 'Deletion request submitted. IT admin will review shortly.');
     }
 
     // Legacy CRUD methods (kept for compatibility)
