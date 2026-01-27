@@ -148,7 +148,7 @@ class DatabaseSeeder extends Seeder
             ]);
         }
 
-        // Create 18 Appointments
+        // Create 18 Appointments (with unique times per doctor)
         $appointmentTypes = ['checkup', 'followup', 'emergency'];
         $statuses = ['scheduled', 'completed', 'cancelled'];
 
@@ -156,10 +156,14 @@ class DatabaseSeeder extends Seeder
             $patient = $patients[$i % count($patients)];
             $doctor = $doctors[$i % count($doctors)];
 
+            // Use unique hours for each appointment to avoid conflicts
+            $hour = 9 + ($i % 8); // Hours from 9 to 16
+            $day = intval($i / 8) + 1; // Distribute across different days
+
             Appointment::create([
                 'patient_id' => $patient->id,
                 'doctor_id' => $doctor->id,
-                'appointment_date' => Carbon::now()->addDays(rand(-10, 30))->format('Y-m-d H:i:s'),
+                'appointment_date' => Carbon::now()->addDays($day)->setHour($hour)->setMinute(0)->setSecond(0)->format('Y-m-d H:i:s'),
                 'appointment_type' => $appointmentTypes[$i % count($appointmentTypes)],
                 'status' => $statuses[$i % count($statuses)],
                 'reason' => 'Appointment for follow-up and checkup',
