@@ -60,8 +60,8 @@
         <form action="{{ route('admin.assignment.store') }}" method="POST">
             @csrf
             <div class="row g-3 align-items-end">
-                <div class="col-md-4">
-                    <div class="form-group-v2" style="margin-bottom: 12px;">
+                <div class="col-md-6">
+                    <div class="form-group-v2" style="margin-bottom: 24px;">
                         <label class="form-label-v2" for="doctor_id">Select Doctor</label>
                         <select class="form-control-v2" id="doctor_id" name="doctor_id" required>
                             <option value="">-- Select Doctor --</option>

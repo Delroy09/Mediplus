@@ -1,18 +1,31 @@
 /* Example highlight style for search results */
 .highlight {
-    background-color: #ffe066;
-    color: #222;
+    background-color: #3d8b8b;
+    color: #ffffff;
     padding: 0 2px;
     border-radius: 2px;
+    opacity: 80%;
 }
 
-/* Example style for search input */
+/* Updated style for search input to match overall design */
 #assignmentSearchInput {
-    border: 1px solid #cbd5e1;
-    border-radius: 4px;
-    padding: 0.5rem 1rem;
+    border: 1px solid #e5e7eb; /* Tailwind gray-300 */
+    border-radius: 0.375rem; /* Tailwind rounded-md */
+    padding: 0.5rem 1rem; /* Tailwind px-4 py-2 */
     font-size: 1rem;
     margin-bottom: 1rem;
     width: 100%;
     box-sizing: border-box;
+    font-family: var(--font-sans), sans-serif;
+    background-color: #f9fafb; /* Tailwind gray-50 */
+    color: #374151; /* Tailwind gray-700 */
+    transition:
+        border-color 0.2s,
+        box-shadow 0.2s;
+}
+
+#assignmentSearchInput:focus {
+    border-color: #4fa6a6; /* Tailwind blue-600 */
+    outline: none;
+    box-shadow: 0 0 0 2px #4b8f8f; /* Subtle blue focus ring */
 }
