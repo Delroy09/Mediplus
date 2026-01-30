@@ -40,7 +40,7 @@
 @endsection
 
 @section('content')
-<!-- Actions -->
+<!-- Action Bar -->
 <div class="mb-4" style="display: flex; justify-content: space-between; align-items: center;">
     <div>
         <p style="margin: 0; color: var(--text-muted);">{{ $doctors->count() ?? 0 }} doctors registered</p>
@@ -50,7 +50,7 @@
     </a>
 </div>
 
-<!-- Table -->
+<!-- Doctors Table -->
 <div class="card-v2">
     <div class="card-header">
         <h5 style="margin: 0; font-weight: 600;">All Doctors</h5>
@@ -79,7 +79,7 @@
                                     {{ strtoupper(substr($doctor->user->name ?? 'D', 0, 1)) }}
                                 </div>
                                 <div>
-                                    <span style="font-weight: 500; display: block;">Dr. {{ $doctor->user->name ?? 'N/A' }}</span>
+                                    <span style="font-weight: 500; display: block;">{{ $doctor->user->name ?? 'N/A' }}</span>
                                     <small style="color: var(--text-muted);">{{ $doctor->qualification ?? '' }}</small>
                                 </div>
                             </div>

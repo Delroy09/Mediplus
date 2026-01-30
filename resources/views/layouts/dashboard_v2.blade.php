@@ -525,8 +525,8 @@
                 {{ strtoupper(substr(Auth::user()->name ?? 'U', 0, 1)) }}
             </div>
             <div class="sidebar-user-info">
-                <div class="sidebar-user-name">Admin</div>
-                <div class="sidebar-user-role">Full Access</div>
+                <div class="sidebar-user-name">{{ Auth::user()->name ?? 'Admin' }}</div>
+                <div class="sidebar-user-role">{{ ucfirst(Auth::user()->role ?? 'Master Control') }}</div>
             </div>
         </div>
 

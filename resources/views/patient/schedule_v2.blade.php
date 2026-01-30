@@ -63,7 +63,7 @@
                         <td>{{ \Carbon\Carbon::parse($appointment->appointment_date)->format('d M Y, h:i A') }}</td>
                         <td>
                             <div style="display: flex; align-items: center; gap: 0.5rem;">
-                                <span style="font-weight: 500;">Dr. {{ $appointment->doctor->user->name ?? 'N/A' }}</span>
+                                <span style="font-weight: 500;">{{ $appointment->doctor->user->name ?? 'N/A' }}</span>
                             </div>
                         </td>
                         <td>{{ ucfirst($appointment->appointment_type) }}</td>

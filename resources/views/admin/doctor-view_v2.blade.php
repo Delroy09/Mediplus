@@ -55,7 +55,7 @@
                 <div style="width: 100px; height: 100px; background: linear-gradient(135deg, var(--primary-teal), #2a6b6b); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1.5rem; font-size: 2.5rem; color: white; font-weight: 600;">
                     {{ strtoupper(substr($doctor->user->name ?? 'D', 0, 1)) }}
                 </div>
-                <h4 style="margin: 0 0 0.5rem 0; font-weight: 600;">Dr. {{ $doctor->user->name ?? 'Unknown' }}</h4>
+                <h4 style="margin: 0 0 0.5rem 0; font-weight: 600;">{{ $doctor->user->name ?? 'Unknown' }}</h4>
                 <p style="margin: 0; color: var(--text-muted);">{{ $doctor->specialization ?? 'Specialist' }}</p>
                 <hr style="margin: 1.5rem 0; border-color: var(--border-color);">
                 <div class="d-flex gap-2 justify-content-center">
@@ -76,7 +76,7 @@
                     <div class="col-md-6">
                         <div class="info-group">
                             <label>Full Name</label>
-                            <p>Dr. {{ $doctor->user->name ?? 'N/A' }}</p>
+                            <p>{{ $doctor->user->name ?? 'N/A' }}</p>
                         </div>
                         <div class="info-group">
                             <label>Email Address</label>

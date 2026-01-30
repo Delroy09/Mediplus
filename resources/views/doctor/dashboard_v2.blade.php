@@ -45,7 +45,7 @@
 <!-- Welcome Card -->
 <div class="card-v2 mb-4">
     <div class="card-body">
-        <h4 style="margin: 0;">Welcome back, <span style="color: var(--primary);">Dr. {{ $user->name ?? 'Doctor' }}</span> 👋</h4>
+        <h4 style="margin: 0;">Welcome back, <span style="color: var(--primary);">{{ $user->name ?? 'Doctor' }}</span> 👋</h4>
         <p style="color: var(--text-secondary); margin: 0.5rem 0 0;">Here's an overview of your patients and appointments.</p>
     </div>
 </div>

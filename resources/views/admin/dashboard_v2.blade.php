@@ -142,7 +142,7 @@
                                 <select name="doctor_id" class="form-control-v2" style="min-width: 150px; padding: 0.5rem;" required>
                                     <option value="">Select Doctor</option>
                                     @foreach($doctors as $doctor)
-                                    <option value="{{ $doctor->id }}">Dr. {{ $doctor->user->name ?? 'Unknown' }}</option>
+                                    <option value="{{ $doctor->id }}">{{ $doctor->user->name ?? 'Unknown' }}</option>
                                     @endforeach
                                 </select>
                             </form>
@@ -237,7 +237,7 @@
                                 <div style="width: 36px; height: 36px; background: var(--bg-cream); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-weight: 500;">
                                     {{ strtoupper(substr($doctor->user->name ?? 'D', 0, 1)) }}
                                 </div>
-                                <span style="font-weight: 500;">Dr. {{ $doctor->user->name ?? 'N/A' }}</span>
+                                <span style="font-weight: 500;">{{ $doctor->user->name ?? 'N/A' }}</span>
                             </div>
                         </td>
                         <td>{{ $doctor->user->email ?? 'N/A' }}</td>

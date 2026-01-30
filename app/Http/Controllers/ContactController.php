@@ -38,6 +38,6 @@ class ContactController extends Controller
         ]);
 
         // 3. Redirect with success message
-        return redirect()->route('contact.show')->with('success', 'Your request has been submitted successfully. You will be notified via email once approved.');
+        return redirect()->route('contact')->with('success', 'Your request has been submitted successfully. You will be notified via email once approved.');
     }
 }

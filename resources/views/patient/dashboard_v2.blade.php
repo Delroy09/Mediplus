@@ -112,7 +112,7 @@
                         <td>
                             <div style="display: flex; align-items: center; gap: 0.75rem;">
                                 <div style="width: 36px; height: 36px; background: var(--primary-light); border-radius: 8px; display: flex; align-items: center; justify-content: center; color: var(--primary);">👨‍⚕️</div>
-                                <span style="font-weight: 500;">Dr. {{ $doctor->user->name }}</span>
+                                <span style="font-weight: 500;">{{ $doctor->user->name }}</span>
                             </div>
                         </td>
                         <td>{{ $doctor->specialization }}</td>

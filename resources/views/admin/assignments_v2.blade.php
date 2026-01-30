@@ -67,7 +67,7 @@
                         <select class="form-control-v2" id="doctor_id" name="doctor_id" required>
                             <option value="">-- Select Doctor --</option>
                             @foreach($doctors ?? [] as $doctor)
-                            <option value="{{ $doctor->id }}">Dr. {{ $doctor->user->name ?? 'Unknown' }} - {{ $doctor->specialization ?? 'General' }}</option>
+                            <option value="{{ $doctor->id }}">{{ $doctor->user->name ?? 'Unknown' }} - {{ $doctor->specialization ?? 'General' }}</option>
                             @endforeach
                         </select>
                     </div>
@@ -120,7 +120,7 @@
                                 <div style="width: 36px; height: 36px; background: linear-gradient(135deg, var(--primary-teal), #2a6b6b); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-weight: 500; color: white;">
                                     {{ strtoupper(substr($assignment->doctor->user->name ?? 'D', 0, 1)) }}
                                 </div>
-                                <span style="font-weight: 500;">Dr. {{ $assignment->doctor->user->name ?? 'N/A' }}</span>
+                                <span style="font-weight: 500;">{{ $assignment->doctor->user->name ?? 'N/A' }}</span>
                             </div>
                         </td>
                         <td>{{ $assignment->doctor->specialization ?? 'N/A' }}</td>

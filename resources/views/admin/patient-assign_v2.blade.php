@@ -92,7 +92,7 @@
                     <option value="">-- Choose a Doctor --</option>
                     @foreach($doctors ?? [] as $doctor)
                     <option value="{{ $doctor->id }}" {{ in_array($doctor->id, $assignedDoctorIds ?? []) ? 'disabled' : '' }}>
-                        Dr. {{ $doctor->user->name ?? 'Unknown' }}
+                        {{ $doctor->user->name ?? 'Unknown' }}
                         - {{ $doctor->specialization ?? 'General' }}
                         ({{ $doctor->department ?? 'N/A' }})
                         {{ in_array($doctor->id, $assignedDoctorIds ?? []) ? '- Already Assigned' : '' }}
@@ -142,7 +142,7 @@
                                 <div style="width: 36px; height: 36px; background: linear-gradient(135deg, var(--primary-teal), #2a6b6b); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-weight: 500; color: white;">
                                     {{ strtoupper(substr($doctor->user->name ?? 'D', 0, 1)) }}
                                 </div>
-                                <span style="font-weight: 500;">Dr. {{ $doctor->user->name ?? 'N/A' }}</span>
+                                <span style="font-weight: 500;">{{ $doctor->user->name ?? 'N/A' }}</span>
                             </div>
                         </td>
                         <td>{{ $doctor->specialization ?? 'N/A' }}</td>
