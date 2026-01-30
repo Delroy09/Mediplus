@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\DB;
 return new class extends Migration
 {
     /**
-     * Simple Views, Triggers, and Stored Procedures for MediPlus
+     * Create descriptive DB views, triggers, and stored procedures for MediPlus
      */
     public function up(): void
     {
@@ -17,9 +17,9 @@ return new class extends Migration
         // VIEWS (Simple read-only queries)
         // ============================================
 
-        // View 1: Patient list with assigned doctor name
+        // View: patient details with assigned doctor
         DB::statement("
-            CREATE VIEW vw_patient_with_doctor AS
+            CREATE VIEW GetPatientDoctor AS
             SELECT 
                 p.id AS patient_id,
                 pu.name AS patient_name,
@@ -33,9 +33,9 @@ return new class extends Migration
             LEFT JOIN users du ON d.user_id = du.id
         ");
 
-        // View 2: Doctor patient count
+        // View: doctor patient counts
         DB::statement("
-            CREATE VIEW vw_doctor_patient_count AS
+            CREATE VIEW GetDoctorPatientCount AS
             SELECT 
                 d.id AS doctor_id,
                 u.name AS doctor_name,
@@ -51,9 +51,9 @@ return new class extends Migration
         // TRIGGERS (Auto-actions on data changes)
         // ============================================
 
-        // Trigger 1: Log when patient status changes
+        // Trigger: log patient status changes
         DB::unprepared("
-            CREATE TRIGGER trg_log_status_change
+            CREATE TRIGGER LogPatientStatusChange
             AFTER UPDATE ON patients
             FOR EACH ROW
             BEGIN
@@ -64,9 +64,9 @@ return new class extends Migration
             END
         ");
 
-        // Trigger 2: Update last_visited_date when medical record is added
+        // Trigger: update patient's last_visited_date after new medical record
         DB::unprepared("
-            CREATE TRIGGER trg_update_last_visit
+            CREATE TRIGGER UpdatePatientLastVisit
             AFTER INSERT ON medical_records
             FOR EACH ROW
             BEGIN
@@ -80,9 +80,9 @@ return new class extends Migration
         // STORED PROCEDURES (Reusable operations)
         // ============================================
 
-        // Procedure 1: Count patients by status
+        // Procedure: count patients by status
         DB::unprepared("
-            CREATE PROCEDURE sp_count_by_status()
+            CREATE PROCEDURE CountPatientsByStatus()
             BEGIN
                 SELECT status, COUNT(*) AS total
                 FROM patients
@@ -90,9 +90,9 @@ return new class extends Migration
             END
         ");
 
-        // Procedure 2: Discharge a patient (updates status + ends assignment)
+        // Procedure: discharge patient and close assignments
         DB::unprepared("
-            CREATE PROCEDURE sp_discharge_patient(IN p_id INT)
+            CREATE PROCEDURE DischargePatient(IN p_id INT)
             BEGIN
                 UPDATE patients 
                 SET status = 'Discharged', last_visited_date = CURDATE()
@@ -107,11 +107,11 @@ return new class extends Migration
 
     public function down(): void
     {
-        DB::unprepared('DROP PROCEDURE IF EXISTS sp_count_by_status');
-        DB::unprepared('DROP PROCEDURE IF EXISTS sp_discharge_patient');
-        DB::unprepared('DROP TRIGGER IF EXISTS trg_log_status_change');
-        DB::unprepared('DROP TRIGGER IF EXISTS trg_update_last_visit');
-        DB::statement('DROP VIEW IF EXISTS vw_patient_with_doctor');
-        DB::statement('DROP VIEW IF EXISTS vw_doctor_patient_count');
+        DB::unprepared('DROP PROCEDURE IF EXISTS CountPatientsByStatus');
+        DB::unprepared('DROP PROCEDURE IF EXISTS DischargePatient');
+        DB::unprepared('DROP TRIGGER IF EXISTS LogPatientStatusChange');
+        DB::unprepared('DROP TRIGGER IF EXISTS UpdatePatientLastVisit');
+        DB::statement('DROP VIEW IF EXISTS GetPatientDoctor');
+        DB::statement('DROP VIEW IF EXISTS GetDoctorPatientCount');
     }
 };
