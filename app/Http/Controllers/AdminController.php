@@ -421,8 +421,12 @@ class AdminController extends Controller
 
         $doctors = Doctor::with('user')->get();
 
-        // Get all patients (not just unassigned ones) - admin can create multiple assignments
-        $patients = Patient::with('user')->get();
+        // Only patients without an active assignment
+        $patients = Patient::with('user')
+            ->whereDoesntHave('doctorAssignments', function ($query) {
+                $query->where('is_active', true);
+            })
+            ->get();
 
         return view('admin.assignments_v2', compact('assignments', 'doctors', 'patients'));
     }

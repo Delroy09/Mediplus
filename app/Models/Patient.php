@@ -30,6 +30,11 @@ class Patient extends Model
         return $this->belongsToMany(Doctor::class, 'patient_doctor_assignments');
     }
 
+    public function doctorAssignments()
+    {
+        return $this->hasMany(\App\Models\PatientDoctorAssignment::class, 'patient_id');
+    }
+
     public function medicalRecords()
     {
         return $this->hasMany(MedicalRecord::class);

@@ -57,6 +57,11 @@
         <h5 style="margin: 0; font-weight: 600;">Create New Assignment</h5>
     </div>
     <div class="card-body">
+        @if(count($patients ?? []) === 0)
+        <div class="alert alert-warning mb-3" role="alert">
+            All patients are currently assigned. Unassign a patient to make them available for new assignments.
+        </div>
+        @endif
         <form action="{{ route('admin.assignment.store') }}" method="POST">
             @csrf
             <div class="row g-3 align-items-end">
@@ -74,7 +79,7 @@
                 <div class="col-md-4">
                     <div class="form-group-v2" style="margin-bottom: 24px;">
                         <label class="form-label-v2" for="patient_id">Select Patient: </label>
-                        <select class="form-control-v2" id="patient_id" name="patient_id" required>
+                        <select class="form-control-v2" id="patient_id" name="patient_id" required @if(count($patients ?? [])===0) disabled @endif>
                             <option value="">-- Select Patient --</option>
                             @foreach($patients ?? [] as $patient)
                             <option value="{{ $patient->id }}">{{ $patient->user->name ?? 'Unknown' }} - {{ $patient->blood_group ?? 'N/A' }}</option>
@@ -83,7 +88,7 @@
                     </div>
                 </div>
                 <div class="col-md-4">
-                    <button type="submit" class="btn-v2 btn-v2-primary" style="padding: 14px; margin-bottom:18px;">
+                    <button type="submit" class="btn-v2 btn-v2-primary" style="padding: 14px; margin-bottom:18px;" @if(count($patients ?? [])===0) disabled @endif>
                         Create Assignment
                     </button>
                 </div>
