@@ -43,7 +43,7 @@
 
 @section('content')
 <div class="row g-4">
-    <!-- Profile Card -->
+    <!-- Profile -->
     <div class="col-lg-4">
         <div class="card-v2">
             <div class="card-body" style="text-align: center; padding: 2rem;">
@@ -71,7 +71,7 @@
         </div>
     </div>
 
-    <!-- Details Card -->
+    <!-- Details -->
     <div class="col-lg-8">
         <div class="card-v2">
             <div class="card-header">
@@ -119,7 +119,7 @@
             </div>
         </div>
 
-        <!-- Stats Card -->
+        <!-- Stats -->
         <div class="card-v2" style="margin-top: 1.5rem;">
             <div class="card-header">
                 <h5 style="margin: 0; font-weight: 600;">Statistics Overview</h5>

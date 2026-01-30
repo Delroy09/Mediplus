@@ -42,7 +42,7 @@
 @endsection
 
 @section('content')
-<!-- Schedule Stats -->
+<!-- Stats -->
 <div class="row g-4 mb-4">
     <div class="col-md-3">
         <div class="stat-card">
@@ -105,7 +105,7 @@
     </div>
 </div>
 
-<!-- Today's Appointments -->
+<!-- Today -->
 <div class="card-v2 mb-4">
     <div class="card-header">
         <h5 style="margin: 0; font-weight: 600;">Today's Appointments</h5>
@@ -163,7 +163,7 @@
     </div>
 </div>
 
-<!-- All Appointments -->
+<!-- All -->
 <div class="card-v2">
     <div class="card-header">
         <h5 style="margin: 0; font-weight: 600;">All Appointments</h5>

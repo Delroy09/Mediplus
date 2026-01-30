@@ -4,7 +4,7 @@
 
 @section('content')
 
-<!-- Hero Section -->
+<!-- Hero -->
 <section class="hero-v2">
     <div class="container">
         <div class="row align-items-center">
@@ -26,12 +26,12 @@
             </div>
             <div class="col-lg-6">
                 <div class="hero-image-container text-center">
-                    <!-- Hero Image -->
+                    <!-- Image -->
                     <img src="https://plus.unsplash.com/premium_photo-1661580574627-9211124e5c3f?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
                         alt="Doctor consulting with patient"
                         style="width: 100%; max-width: 480px; height: 400px; object-fit: cover; border-radius: 20px; box-shadow: 0 20px 40px rgba(0,0,0,0.1);">
 
-                    <!-- Floating Badges -->
+                    <!-- Badges -->
                     <div class="floating-badge badge-1">
                         <span>✓</span> Convenient
                     </div>
@@ -47,7 +47,7 @@
     </div>
 </section>
 
-<!-- How It Works Section -->
+<!-- How It Works -->
 <section class="how-it-works" id="how-it-works">
     <div class="container">
         <h2>Simple, Convenient, Effective</h2>
@@ -86,7 +86,7 @@
     </div>
 </section>
 
-<!-- Features Section -->
+<!-- Features -->
 <section class="features-v2" id="features">
     <div class="container">
         <div class="text-center mb-5">
@@ -147,7 +147,7 @@
     </div>
 </section>
 
-<!-- CTA Section -->
+<!-- Call To Action -->
 <section style="background: var(--primary); padding: 4rem 0;">
     <div class="container text-center">
         <h2 class="font-serif text-white mb-3" style="font-size: clamp(1.75rem, 4vw, 2.25rem);">Ready to get started?</h2>

@@ -18,7 +18,7 @@
                             <p style="color: var(--text-secondary); font-size: 0.95rem;">Sign in to your patient account</p>
                         </div>
 
-                        <!-- Error Messages -->
+                        <!-- Errors -->
                         @if ($errors->any())
                         <div class="alert" style="background: #FEF2F2; border: none; border-radius: 12px; color: #991B1B; padding: 1rem; margin-bottom: 1.5rem;">
                             <ul class="mb-0 list-unstyled">
@@ -29,7 +29,7 @@
                         </div>
                         @endif
 
-                        <!-- Login Form -->
+                        <!-- Form -->
                         <form method="POST" action="{{ route('login.submit') }}">
                             @csrf
 
@@ -89,7 +89,7 @@
                     </div>
                 </div>
 
-                <!-- Employee Login Link -->
+                <!-- Employee Link -->
                 <div class="text-center mt-4">
                     <p style="color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 0.5rem;">Are you a medical staff member?</p>
                     <a href="{{ route('doctor.login') }}" style="color: var(--primary); text-decoration: none; font-weight: 500; display: inline-flex; align-items: center; gap: 0.5rem;">

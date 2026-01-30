@@ -42,14 +42,14 @@
 @endsection
 
 @section('content')
-<!-- Back Button -->
+<!-- Back -->
 <div style="margin-bottom: 1.5rem;">
     <a href="{{ route('doctor.patient.view', $patient->id) }}" class="btn-v2 btn-v2-secondary">
         ← Back to Patient Details
     </a>
 </div>
 
-<!-- Patient Summary -->
+<!-- Patient -->
 <div class="card-v2 mb-4">
     <div class="card-body">
         <div style="display: flex; align-items: center; gap: 1rem;">
@@ -73,7 +73,7 @@
     </div>
 </div>
 
-<!-- Update Form -->
+<!-- Form -->
 <div class="card-v2">
     <div class="card-header">
         <h5 style="margin: 0; font-weight: 600;">Update Status</h5>

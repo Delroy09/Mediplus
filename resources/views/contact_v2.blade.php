@@ -4,7 +4,7 @@
 
 @section('content')
 
-<!-- Hero Banner -->
+<!-- Hero -->
 <section style="background: var(--bg-white); padding: 3rem 0 2rem;">
     <div class="container">
         <div class="text-center">
@@ -17,7 +17,7 @@
     </div>
 </section>
 
-<!-- Form Section -->
+<!-- Form -->
 <section style="background: var(--bg-cream); padding: 3rem 0 5rem;">
     <div class="container">
         <div class="row justify-content-center">
@@ -130,7 +130,7 @@
                 </div>
             </div>
 
-            <!-- FAQ Sidebar -->
+            <!-- FAQ -->
             <div class="col-lg-5 mt-4 mt-lg-0">
                 <div class="card-v2">
                     <div class="card-header">
@@ -195,7 +195,7 @@
                     </div>
                 </div>
 
-                <!-- Contact Info -->
+                <!-- Contact -->
                 <div class="card-v2 mt-4">
                     <div class="card-body" style="padding: 1.5rem;">
                         <h5 style="font-size: 1rem; font-weight: 600; margin-bottom: 1rem;">Need Help?</h5>

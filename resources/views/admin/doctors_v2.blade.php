@@ -40,7 +40,7 @@
 @endsection
 
 @section('content')
-<!-- Action Bar -->
+<!-- Actions -->
 <div class="mb-4" style="display: flex; justify-content: space-between; align-items: center;">
     <div>
         <p style="margin: 0; color: var(--text-muted);">{{ $doctors->count() ?? 0 }} doctors registered</p>
@@ -50,7 +50,7 @@
     </a>
 </div>
 
-<!-- Doctors Table -->
+<!-- Table -->
 <div class="card-v2">
     <div class="card-header">
         <h5 style="margin: 0; font-weight: 600;">All Doctors</h5>
