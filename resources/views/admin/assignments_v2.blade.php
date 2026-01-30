@@ -2,7 +2,7 @@
 
 @section('title', 'Manage Assignments')
 
-@section('page-title', 'Doctor-Patient Assignments')
+@section('page-title', 'Manage Assignments')
 
 @section('sidebar-menu')
 <a href="{{ route('admin.dashboard') }}">
@@ -52,7 +52,6 @@
 </div>
 @endif
 
-<!-- New Assignment Form -->
 <div class="card-v2 mb-4">
     <div class="card-header">
         <h5 style="margin: 0; font-weight: 600;">Create New Assignment</h5>
@@ -93,15 +92,15 @@
     </div>
 </div>
 
-<!-- Current Assignments -->
 <div class="card-v2">
-    <div class="card-header">
+    <div class="card-header d-flex justify-content-between align-items-center">
         <h5 style="margin: 0; font-weight: 600;">Current Assignments</h5>
+        <input type="text" id="assignmentSearchInput" class="form-control-v2" style="width: 240px; margin-left: 1rem;" placeholder="Search assignments..." oninput="filterAssignmentsTable()">
     </div>
     <div class="card-body" style="padding: 0;">
         @if(isset($assignments) && count($assignments) > 0)
         <div class="scrollable-table">
-            <table class="table-v2">
+            <table class="table-v2" id="assignmentsTable">
                 <thead>
                     <tr>
                         <th>Doctor</th>
@@ -117,23 +116,23 @@
                     <tr>
                         <td>
                             <div style="display: flex; align-items: center; gap: 0.75rem;">
-                                <div style="width: 36px; height: 36px; background: linear-gradient(135deg, var(--primary-teal), #2a6b6b); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-weight: 500; color: white;">
+                                <div class="avatar-initial" style="width: 36px; height: 36px; background: linear-gradient(135deg, var(--primary-teal), #2a6b6b); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-weight: 500; color: white;">
                                     {{ strtoupper(substr($assignment->doctor->user->name ?? 'D', 0, 1)) }}
                                 </div>
-                                <span style="font-weight: 500;">{{ $assignment->doctor->user->name ?? 'N/A' }}</span>
+                                <span class="search-text" style="font-weight: 500;">{{ $assignment->doctor->user->name ?? 'N/A' }}</span>
                             </div>
                         </td>
-                        <td>{{ $assignment->doctor->specialization ?? 'N/A' }}</td>
+                        <td class="search-text">{{ $assignment->doctor->specialization ?? 'N/A' }}</td>
                         <td>
                             <div style="display: flex; align-items: center; gap: 0.75rem;">
-                                <div style="width: 36px; height: 36px; background: var(--bg-cream); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-weight: 500;">
+                                <div class="avatar-initial" style="width: 36px; height: 36px; background: var(--bg-cream); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-weight: 500;">
                                     {{ strtoupper(substr($assignment->patient->user->name ?? 'P', 0, 1)) }}
                                 </div>
-                                <span>{{ $assignment->patient->user->name ?? 'N/A' }}</span>
+                                <span class="search-text">{{ $assignment->patient->user->name ?? 'N/A' }}</span>
                             </div>
                         </td>
                         <td>
-                            <span class="badge-v2 
+                            <span class="badge-v2 search-text 
                                 @if($assignment->patient->status === 'Admitted') badge-admitted
                                 @elseif($assignment->patient->status === 'Surgery') badge-surgery
                                 @else badge-discharged
@@ -141,13 +140,16 @@
                                 {{ $assignment->patient->status ?? 'N/A' }}
                             </span>
                         </td>
-                        <td>{{ \Carbon\Carbon::parse($assignment->created_at)->format('M d, Y') }}</td>
+                        <td class="search-text">{{ \Carbon\Carbon::parse($assignment->created_at)->format('M d, Y') }}</td>
                         <td>
                             <form action="{{ route('admin.assignment.delete', $assignment->id) }}" method="POST" style="display: inline;">
                                 @csrf
                                 @method('DELETE')
                                 <button type="submit" class="btn-v2 btn-v2-danger btn-v2-sm" onclick="return confirm('Remove this assignment?')">
-                                    Remove
+                                    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
+                                        <polyline points="3 6 5 6 21 6"></polyline>
+                                        <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                                    </svg>
                                 </button>
                             </form>
                         </td>
@@ -157,23 +159,15 @@
             </table>
         </div>
         @else
-        <div class="empty-state">
-            <div class="empty-state-icon">🔗</div>
-            <p>No assignments created yet.</p>
-            <small style="color: var(--text-muted);">Use the form above to assign patients to doctors.</small>
+        <div style="padding: 2rem; text-align: center; color: var(--text-muted);">
+            No active assignments found.
         </div>
         @endif
     </div>
 </div>
-
-<style>
-    .btn-v2-danger {
-        background: #ef4444;
-        color: white;
-    }
-
-    .btn-v2-danger:hover {
-        background: #dc2626;
-    }
-</style>
 @endsection
+
+@push('scripts')
+<script src="{{ asset('js/assignments-search.js') }}"></script>
+<link rel="stylesheet" href="{{ asset('css/assignments-search.css') }}">
+@endpush
