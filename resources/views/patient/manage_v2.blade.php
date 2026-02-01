@@ -73,7 +73,13 @@
         <h5 style="margin: 0; font-weight: 600; color: #991B1B;">⚠️ Danger Zone</h5>
     </div>
     <div class="card-body">
-        @if(($patient->status ?? 'Discharged') === 'Discharged')
+        @if(isset($pendingDeletionRequest) && $pendingDeletionRequest)
+        <!-- Pending deletion request banner -->
+        <div class="alert alert-warning" role="alert" style="background: #fef3c7; border: 1px solid #fbbf24; color: #92400e; margin-bottom: 0;">
+            <strong>⏳ Deletion Request Pending</strong>
+            <p style="margin-top: 0.5rem; margin-bottom: 0;">Your account deletion request has been submitted on <strong>{{ \Carbon\Carbon::parse($pendingDeletionRequest->created_at)->format('M d, Y') }}</strong>. An administrator will review it shortly.</p>
+        </div>
+        @elseif(($patient->status ?? 'Discharged') === 'Discharged')
         <p style="color: var(--text-secondary); margin-bottom: 1.5rem;">
             Once you request account deletion, all your data will be permanently removed. This action cannot be undone.
         </p>

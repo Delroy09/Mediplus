@@ -184,7 +184,12 @@ class PatientController extends Controller
             abort(404, 'Patient record not found');
         }
 
-        return view('patient.manage_v2', compact('user', 'patient'));
+        // Check if there's a pending deletion request
+        $pendingDeletionRequest = DeletionRequest::where('patient_id', $patient->id)
+            ->where('status', 'pending')
+            ->first();
+
+        return view('patient.manage_v2', compact('user', 'patient', 'pendingDeletionRequest'));
     }
 
     /**

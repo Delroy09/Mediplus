@@ -167,9 +167,9 @@
 
 <!-- Pending Deletion Requests -->
 @if(isset($pendingDeletionRequests) && count($pendingDeletionRequests) > 0)
-<div class="card-v2 mb-4" style="border-left: 4px solid #f59e0b;">
-    <div class="card-header">
-        <h5 style="margin: 0; font-weight: 600;">⚠️ Pending Deletion Requests</h5>
+<div class="card-v2 mb-4" style="border-left: 4px solid #dc2626;">
+    <div class="card-header" style="background: #fef2f2; border-bottom: 1px solid #fecaca;">
+        <h5 style="margin: 0; font-weight: 600; color: #991b1b;">🗑️ Patient Account Deletion Requests</h5>
     </div>
     <div class="card-body" style="padding: 0;">
         <div class="scrollable-table">
@@ -178,6 +178,7 @@
                     <tr>
                         <th>Patient Name</th>
                         <th>Email</th>
+                        <th>Reason</th>
                         <th>Requested On</th>
                         <th>Actions</th>
                     </tr>
@@ -187,16 +188,17 @@
                     <tr>
                         <td>{{ $request->patient->user->name ?? 'N/A' }}</td>
                         <td>{{ $request->patient->user->email ?? 'N/A' }}</td>
+                        <td><span style="color: #6b7280; font-size: 0.875rem;">{{ Str::limit($request->reason, 40) }}</span></td>
                         <td>{{ \Carbon\Carbon::parse($request->created_at)->format('M d, Y') }}</td>
                         <td>
                             <div class="d-flex gap-2">
                                 <form action="{{ route('admin.approve-deletion', $request->id) }}" method="POST" style="display: inline;">
                                     @csrf
-                                    <button type="submit" class="btn-v2 btn-v2-danger btn-v2-sm" onclick="return confirm('Are you sure?')">Approve</button>
+                                    <button type="submit" class="btn-v2 btn-v2-danger btn-v2-sm" onclick="return confirm('⚠️ This will permanently delete the patient account and all related data. Continue?')">Delete Account</button>
                                 </form>
                                 <form action="{{ route('admin.reject-deletion', $request->id) }}" method="POST" style="display: inline;">
                                     @csrf
-                                    <button type="submit" class="btn-v2 btn-v2-secondary btn-v2-sm">Reject</button>
+                                    <button type="submit" class="btn-v2 btn-v2-secondary btn-v2-sm">Reject Request</button>
                                 </form>
                             </div>
                         </td>
