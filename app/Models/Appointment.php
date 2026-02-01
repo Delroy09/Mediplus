@@ -17,6 +17,10 @@ class Appointment extends Model
         'created_by'
     ];
 
+    protected $casts = [
+        'appointment_date' => 'datetime',
+    ];
+
     public function patient()
     {
         return $this->belongsTo(Patient::class);
