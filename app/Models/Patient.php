@@ -17,7 +17,8 @@ class Patient extends Model
         'status',
         'last_visited_date',
         'emergency_contact_name',
-        'emergency_contact_number'
+        'emergency_contact_number',
+        'changed_by',
     ];
 
     public function user()

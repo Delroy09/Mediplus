@@ -360,7 +360,8 @@ class DoctorController extends Controller
         $patient = Patient::findOrFail($id);
         $patient->update([
             'status' => $validated['status'],
-            'last_visited_date' => $validated['last_visited_date'] ?? $patient->last_visited_date
+            'last_visited_date' => $validated['last_visited_date'] ?? $patient->last_visited_date,
+            'changed_by' => \Illuminate\Support\Facades\Auth::id(),
         ]);
 
         return redirect()->route('doctor.patient.view', $id)->with('success', 'Patient status updated successfully!');

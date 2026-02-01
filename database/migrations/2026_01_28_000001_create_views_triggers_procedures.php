@@ -58,8 +58,8 @@ return new class extends Migration
             FOR EACH ROW
             BEGIN
                 IF OLD.status != NEW.status THEN
-                    INSERT INTO patient_status_logs (patient_id, old_status, new_status, changed_at)
-                    VALUES (NEW.id, OLD.status, NEW.status, NOW());
+                    INSERT INTO patient_status_logs (patient_id, old_status, new_status, changed_by, changed_at)
+                    VALUES (NEW.id, OLD.status, NEW.status, NEW.changed_by, NOW());
                 END IF;
             END
         ");

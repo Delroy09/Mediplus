@@ -8,6 +8,7 @@ use App\Models\Patient;
 use App\Models\User;
 use App\Models\Appointment;
 use App\Models\Doctor;
+use App\Models\DeletionRequest;
 
 class PatientController extends Controller
 {
@@ -216,14 +217,35 @@ class PatientController extends Controller
             'reason' => 'required|string|max:500'
         ]);
 
-        // TODO: Create deletion request in database
-        // DeletionRequest::create([
-        //     'user_id' => Auth::id(),
-        //     'reason' => $validated['reason'],
-        //     'status' => 'pending'
-        // ]);
+        $user = Auth::user();
+        $patient = Patient::where('user_id', $user->id)->first();
 
-        return redirect()->route('patient.manage')->with('success', 'Deletion request submitted. IT admin will review shortly.');
+        if (!$patient) {
+            return redirect()->route('patient.manage')->withErrors(['error' => 'Patient record not found.']);
+        }
+
+        // Only allow deletion request if patient status is 'Discharged'
+        if ($patient->status !== 'Discharged') {
+            return redirect()->route('patient.manage')->withErrors(['error' => 'You can only request account deletion when your status is Discharged.']);
+        }
+
+        // Check if there's already a pending request
+        $existingRequest = DeletionRequest::where('patient_id', $patient->id)
+            ->where('status', 'pending')
+            ->first();
+
+        if ($existingRequest) {
+            return redirect()->route('patient.manage')->withErrors(['error' => 'You already have a pending deletion request.']);
+        }
+
+        // Create deletion request
+        DeletionRequest::create([
+            'patient_id' => $patient->id,
+            'reason' => $validated['reason'],
+            'status' => 'pending'
+        ]);
+
+        return redirect()->route('patient.manage')->with('success', 'Deletion request submitted successfully. An admin will review your request shortly.');
     }
 
     // Legacy CRUD methods (kept for compatibility)

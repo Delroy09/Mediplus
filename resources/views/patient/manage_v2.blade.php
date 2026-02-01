@@ -73,6 +73,7 @@
         <h5 style="margin: 0; font-weight: 600; color: #991B1B;">⚠️ Danger Zone</h5>
     </div>
     <div class="card-body">
+        @if(($patient->status ?? 'Discharged') === 'Discharged')
         <p style="color: var(--text-secondary); margin-bottom: 1.5rem;">
             Once you request account deletion, all your data will be permanently removed. This action cannot be undone.
         </p>
@@ -90,6 +91,11 @@
                 Request Account Deletion
             </button>
         </form>
+        @else
+        <div class="alert alert-info" role="alert" style="margin-bottom: 0;">
+            You can only request account deletion after being discharged from the hospital.
+        </div>
+        @endif
     </div>
 </div>
 @endsection

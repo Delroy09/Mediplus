@@ -6,6 +6,8 @@ use App\Models\AccountRequest;
 use App\Models\User;
 use App\Models\Patient;
 use App\Models\Doctor;
+use App\Models\DeletionRequest;
+use App\Models\PatientDoctorAssignment;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\DB;
@@ -162,7 +164,11 @@ class AdminController extends Controller
         // Get doctors for assignment dropdown
         $doctors = Doctor::with('user')->get();
 
-        $pendingDeletionRequests = collect([]); // TODO: Implement deletion requests table
+        // Pending deletion requests
+        $pendingDeletionRequests = DeletionRequest::where('status', 'pending')
+            ->with(['patient.user'])
+            ->orderBy('created_at', 'desc')
+            ->get();
 
         $recentDoctors = Doctor::with('user')
             ->withCount(['patients' => function ($query) {
@@ -482,8 +488,40 @@ class AdminController extends Controller
      */
     public function approveDeletion($id)
     {
-        // TODO: Implement deletion request approval
-        return redirect()->back()->with('success', 'Deletion request approved.');
+        $deletionRequest = DeletionRequest::findOrFail($id);
+
+        if ($deletionRequest->status !== 'pending') {
+            return redirect()->back()->withErrors(['error' => 'This deletion request has already been processed.']);
+        }
+
+        DB::beginTransaction();
+        try {
+            $patient = $deletionRequest->patient;
+            $user = $patient->user;
+
+            // Update deletion request status
+            $deletionRequest->update([
+                'status' => 'approved',
+                'reviewed_by' => Auth::id(),
+                'reviewed_at' => now(),
+                'deleted_at' => now()
+            ]);
+
+            // Unlink all doctor-patient assignments
+            PatientDoctorAssignment::where('patient_id', $patient->id)->delete();
+
+            // Delete patient record (cascades to related data via foreign keys)
+            $patient->delete();
+
+            // Delete user account
+            $user->delete();
+
+            DB::commit();
+            return redirect()->route('admin.dashboard')->with('success', 'Patient account deleted successfully.');
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return redirect()->back()->withErrors(['error' => 'Failed to delete patient account: ' . $e->getMessage()]);
+        }
     }
 
     /**
@@ -491,7 +529,18 @@ class AdminController extends Controller
      */
     public function rejectDeletion($id)
     {
-        // TODO: Implement deletion request rejection
-        return redirect()->back()->with('success', 'Deletion request rejected.');
+        $deletionRequest = DeletionRequest::findOrFail($id);
+
+        if ($deletionRequest->status !== 'pending') {
+            return redirect()->back()->withErrors(['error' => 'This deletion request has already been processed.']);
+        }
+
+        $deletionRequest->update([
+            'status' => 'rejected',
+            'reviewed_by' => Auth::id(),
+            'reviewed_at' => now()
+        ]);
+
+        return redirect()->route('admin.dashboard')->with('success', 'Deletion request rejected.');
     }
 }
