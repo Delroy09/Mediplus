@@ -118,10 +118,7 @@
 
                             <div class="d-grid mt-4">
                                 <button type="submit" class="btn-cta" style="width: 100%; justify-content: center; padding: 1rem;">
-                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 20px; height: 20px;">
-                                        <path d="M22 2L11 13"></path>
-                                        <path d="M22 2L15 22L11 13L2 9L22 2Z"></path>
-                                    </svg>
+                                    <i data-lucide="send" style="width: 20px; height: 20px;"></i>
                                     Submit Application
                                 </button>
                             </div>

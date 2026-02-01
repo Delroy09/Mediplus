@@ -78,11 +78,7 @@
 
                             <div class="d-grid mb-4">
                                 <button type="submit" class="btn-cta" style="width: 100%; justify-content: center; padding: 1rem;">
-                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 20px; height: 20px;">
-                                        <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"></path>
-                                        <polyline points="10 17 15 12 10 7"></polyline>
-                                        <line x1="15" y1="12" x2="3" y2="12"></line>
-                                    </svg>
+                                    <i data-lucide="arrow-right" style="width: 20px; height: 20px;"></i>
                                     Sign In to Portal
                                 </button>
                             </div>
@@ -98,9 +94,7 @@
                             <div class="text-center">
                                 <div class="d-flex justify-content-center gap-3" style="font-size: 0.9rem;">
                                     <a href="{{ route('home') }}" style="color: var(--text-secondary); text-decoration: none; display: inline-flex; align-items: center; gap: 0.25rem;">
-                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 16px; height: 16px;">
-                                            <path d="M19 12H5M12 19l-7-7 7-7" />
-                                        </svg>
+                                        <i data-lucide="arrow-left" style="width: 16px; height: 16px;"></i>
                                         Back to Home
                                     </a>
                                     <span style="color: var(--border-color);">|</span>

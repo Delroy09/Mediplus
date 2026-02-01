@@ -507,6 +507,7 @@
             cursor: pointer;
         }
     </style>
+    <script src="https://unpkg.com/lucide@latest"></script>
     @yield('styles')
 </head>
 
@@ -539,11 +540,7 @@
             <form action="{{ route('logout') }}" method="POST">
                 @csrf
                 <button type="submit" class="btn-logout">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 18px; height: 18px;">
-                        <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
-                        <polyline points="16 17 21 12 16 7"></polyline>
-                        <line x1="21" y1="12" x2="9" y2="12"></line>
-                    </svg>
+                    <i data-lucide="log-out" style="width: 18px; height: 18px;"></i>
                     Logout
                 </button>
             </form>
@@ -555,11 +552,7 @@
         <header class="top-header">
             <div class="d-flex align-items-center gap-3">
                 <button class="mobile-toggle" onclick="document.getElementById('sidebar').classList.toggle('open')">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <line x1="3" y1="12" x2="21" y2="12"></line>
-                        <line x1="3" y1="6" x2="21" y2="6"></line>
-                        <line x1="3" y1="18" x2="21" y2="18"></line>
-                    </svg>
+                    <i data-lucide="menu"></i>
                 </button>
                 <h1 class="page-title">@yield('page-title')</h1>
             </div>
@@ -574,6 +567,9 @@
     </main>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        lucide.createIcons();
+    </script>
     @yield('scripts')
     @stack('scripts')
 </body>

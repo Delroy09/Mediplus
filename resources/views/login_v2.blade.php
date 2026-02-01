@@ -65,11 +65,7 @@
 
                             <div class="d-grid mb-4">
                                 <button type="submit" class="btn-cta" style="width: 100%; justify-content: center; padding: 1rem;">
-                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 20px; height: 20px;">
-                                        <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"></path>
-                                        <polyline points="10 17 15 12 10 7"></polyline>
-                                        <line x1="15" y1="12" x2="3" y2="12"></line>
-                                    </svg>
+                                    <i data-lucide="arrow-right" style="width: 20px; height: 20px;"></i>
                                     Sign In
                                 </button>
                             </div>
@@ -93,10 +89,7 @@
                 <div class="text-center mt-4">
                     <p style="color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 0.5rem;">Are you a medical staff member?</p>
                     <a href="{{ route('doctor.login') }}" style="color: var(--primary); text-decoration: none; font-weight: 500; display: inline-flex; align-items: center; gap: 0.5rem;">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 18px; height: 18px;">
-                            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
-                            <circle cx="12" cy="7" r="4"></circle>
-                        </svg>
+                        <i data-lucide="user-circle" style="width: 18px; height: 18px;"></i>
                         Employee Portal
                     </a>
                 </div>

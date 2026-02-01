@@ -18,9 +18,7 @@
                     Professional patient management system - with real administrators - designed to bridge the gap between doctors and patients — on <em>your</em> terms.
                 </p>
                 <a href="{{ route('contact') }}" class="btn-cta">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
-                    </svg>
+                    <i data-lucide="message-square"></i>
                     Request Your Account
                 </a>
             </div>

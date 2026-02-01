@@ -459,20 +459,14 @@
                     <a href="{{ route('home') }}#how-it-works" class="nav-link">How It Works</a>
                     <a href="{{ route('home') }}#features" class="nav-link">Features</a>
                     <a href="{{ route('contact') }}" class="btn-cta">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
-                        </svg>
+                        <i data-lucide="message-square"></i>
                         Request Account
                     </a>
                 </div>
 
                 <!-- Mobile Menu Toggle -->
                 <button class="btn d-md-none" type="button" data-bs-toggle="collapse" data-bs-target="#mobileNav">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <line x1="3" y1="12" x2="21" y2="12"></line>
-                        <line x1="3" y1="6" x2="21" y2="6"></line>
-                        <line x1="3" y1="18" x2="21" y2="18"></line>
-                    </svg>
+                    <i data-lucide="menu" style="width: 24px; height: 24px;"></i>
                 </button>
             </div>
 
@@ -534,6 +528,10 @@
     </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script>
+        lucide.createIcons();
+    </script>
     @yield('scripts')
 </body>
 

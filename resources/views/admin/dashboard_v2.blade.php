@@ -6,35 +6,19 @@
 
 @section('sidebar-menu')
 <a href="{{ route('admin.dashboard') }}" class="active">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-        <rect x="3" y="3" width="7" height="7"></rect>
-        <rect x="14" y="3" width="7" height="7"></rect>
-        <rect x="14" y="14" width="7" height="7"></rect>
-        <rect x="3" y="14" width="7" height="7"></rect>
-    </svg>
+    <i data-lucide="layout-grid"></i>
     Dashboard
 </a>
 <a href="{{ route('admin.doctors') }}">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
-        <circle cx="12" cy="7" r="4"></circle>
-    </svg>
+    <i data-lucide="stethoscope"></i>
     Doctors
 </a>
 <a href="{{ route('admin.patients') }}">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-        <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
-        <circle cx="9" cy="7" r="4"></circle>
-        <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
-        <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
-    </svg>
+    <i data-lucide="users"></i>
     Patients
 </a>
 <a href="{{ route('admin.assignments') }}">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-        <polyline points="9 11 12 14 22 4"></polyline>
-        <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path>
-    </svg>
+    <i data-lucide="clipboard-list"></i>
     Assignments
 </a>
 @endsection
@@ -52,8 +36,8 @@
 <div class="row g-4 mb-4">
     <div class="col-md-3">
         <div class="stat-card">
-            <div class="stat-icon" style="background: rgba(61, 139, 139, 0.1); color: var(--primary-teal); font-size: 24px;">
-                👨‍⚕️
+            <div class="stat-icon" style="background: rgba(61, 139, 139, 0.1);">
+                <i data-lucide="user-check" style="color: #3b82f6;"></i>
             </div>
             <div class="stat-content">
                 <div class="stat-value">{{ $totalDoctors ?? 0 }}</div>
@@ -64,12 +48,7 @@
     <div class="col-md-3">
         <div class="stat-card">
             <div class="stat-icon" style="background: rgba(59, 130, 246, 0.1);">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#3b82f6" stroke-width="2">
-                    <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
-                    <circle cx="9" cy="7" r="4"></circle>
-                    <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
-                    <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
-                </svg>
+                <i data-lucide="users" style="color: #3b82f6;"></i>
             </div>
             <div class="stat-content">
                 <div class="stat-value">{{ $totalPatients ?? 0 }}</div>
@@ -80,11 +59,7 @@
     <div class="col-md-3">
         <div class="stat-card">
             <div class="stat-icon" style="background: rgba(245, 158, 11, 0.1);">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#f59e0b" stroke-width="2">
-                    <circle cx="12" cy="12" r="10"></circle>
-                    <line x1="12" y1="8" x2="12" y2="12"></line>
-                    <line x1="12" y1="16" x2="12.01" y2="16"></line>
-                </svg>
+                <i data-lucide="clock" style="color: #f59e0b;"></i>
             </div>
             <div class="stat-content">
                 <div class="stat-value">{{ $pendingRequestsCount ?? 0 }}</div>
@@ -95,10 +70,7 @@
     <div class="col-md-3">
         <div class="stat-card">
             <div class="stat-icon" style="background: rgba(34, 197, 94, 0.1);">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="2">
-                    <polyline points="9 11 12 14 22 4"></polyline>
-                    <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path>
-                </svg>
+                <i data-lucide="link" style="color: #22c55e;"></i>
             </div>
             <div class="stat-content">
                 <div class="stat-value">{{ $totalAssignments ?? 0 }}</div>
@@ -169,7 +141,10 @@
 @if(isset($pendingDeletionRequests) && count($pendingDeletionRequests) > 0)
 <div class="card-v2 mb-4" style="border-left: 4px solid #dc2626;">
     <div class="card-header" style="background: #fef2f2; border-bottom: 1px solid #fecaca;">
-        <h5 style="margin: 0; font-weight: 600; color: #991b1b;">🗑️ Patient Account Deletion Requests</h5>
+        <h5 style="margin: 0; font-weight: 600; color: #991b1b; display: flex; align-items: center; gap: 0.5rem;">
+            <i data-lucide="trash-2" style="width: 20px; height: 20px;"></i>
+            Patient Account Deletion Requests
+        </h5>
     </div>
     <div class="card-body" style="padding: 0;">
         <div class="scrollable-table">

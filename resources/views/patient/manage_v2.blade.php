@@ -6,35 +6,19 @@
 
 @section('sidebar-menu')
 <a href="{{ route('patient.dashboard') }}">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-        <rect x="3" y="3" width="7" height="7"></rect>
-        <rect x="14" y="3" width="7" height="7"></rect>
-        <rect x="14" y="14" width="7" height="7"></rect>
-        <rect x="3" y="14" width="7" height="7"></rect>
-    </svg>
+    <i data-lucide="layout-grid"></i>
     Dashboard
 </a>
 <a href="{{ route('patient.profile') }}">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
-        <circle cx="12" cy="7" r="4"></circle>
-    </svg>
+    <i data-lucide="user"></i>
     Edit Profile
 </a>
 <a href="{{ route('patient.schedule') }}">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-        <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
-        <line x1="16" y1="2" x2="16" y2="6"></line>
-        <line x1="8" y1="2" x2="8" y2="6"></line>
-        <line x1="3" y1="10" x2="21" y2="10"></line>
-    </svg>
+    <i data-lucide="calendar"></i>
     My Schedule
 </a>
 <a href="{{ route('patient.manage') }}" class="active">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-        <circle cx="12" cy="12" r="3"></circle>
-        <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
-    </svg>
+    <i data-lucide="settings"></i>
     Manage Account
 </a>
 @endsection
@@ -70,13 +54,19 @@
 
 <div class="card-v2 mt-4" style="border-color: #FCA5A5;">
     <div class="card-header" style="background: #FEF2F2; border-bottom-color: #FECACA;">
-        <h5 style="margin: 0; font-weight: 600; color: #991B1B;">⚠️ Danger Zone</h5>
+        <h5 style="margin: 0; font-weight: 600; color: #991B1B; display: flex; align-items: center; gap: 0.5rem;">
+            <i data-lucide="alert-triangle" style="width: 20px; height: 20px;"></i>
+            Danger Zone
+        </h5>
     </div>
     <div class="card-body">
         @if(isset($pendingDeletionRequest) && $pendingDeletionRequest)
         <!-- Pending deletion request banner -->
         <div class="alert alert-warning" role="alert" style="background: #fef3c7; border: 1px solid #fbbf24; color: #92400e; margin-bottom: 0;">
-            <strong>⏳ Deletion Request Pending</strong>
+            <div style="display: flex; align-items: center; gap: 0.5rem;">
+                <i data-lucide="clock" style="width: 20px; height: 20px;"></i>
+                <strong>Deletion Request Pending</strong>
+            </div>
             <p style="margin-top: 0.5rem; margin-bottom: 0;">Your account deletion request has been submitted on <strong>{{ \Carbon\Carbon::parse($pendingDeletionRequest->created_at)->format('M d, Y') }}</strong>. An administrator will review it shortly.</p>
         </div>
         @elseif(($patient->status ?? 'Discharged') === 'Discharged')
@@ -90,10 +80,7 @@
                 <textarea name="reason" class="form-control form-control-v2" rows="3" required placeholder="Please provide a reason for account deletion..."></textarea>
             </div>
             <button type="submit" class="btn-v2 btn-v2-danger" onclick="return confirm('Are you sure you want to request account deletion? This action cannot be undone.')">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 18px; height: 18px;">
-                    <polyline points="3 6 5 6 21 6"></polyline>
-                    <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
-                </svg>
+                <i data-lucide="trash-2" style="width: 18px; height: 18px;"></i>
                 Request Account Deletion
             </button>
         </form>
