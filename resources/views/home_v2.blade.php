@@ -17,10 +17,29 @@
                 <p class="hero-description">
                     Professional patient management system - with real administrators - designed to bridge the gap between doctors and patients — on <em>your</em> terms.
                 </p>
+                @auth
+                @if(Auth::user()->role === 'patient')
+                <a href="{{ route('patient.dashboard') }}" class="btn-cta">
+                    <i data-lucide="layout-grid"></i>
+                    Go to Dashboard
+                </a>
+                @elseif(Auth::user()->role === 'doctor')
+                <a href="{{ route('doctor.dashboard') }}" class="btn-cta">
+                    <i data-lucide="layout-grid"></i>
+                    Go to Dashboard
+                </a>
+                @elseif(Auth::user()->role === 'admin')
+                <a href="{{ route('admin.dashboard') }}" class="btn-cta">
+                    <i data-lucide="layout-grid"></i>
+                    Go to Dashboard
+                </a>
+                @endif
+                @else
                 <a href="{{ route('contact') }}" class="btn-cta">
                     <i data-lucide="message-square"></i>
                     Request Your Account
                 </a>
+                @endauth
             </div>
             <div class="col-lg-6">
                 <div class="hero-image-container text-center">
@@ -148,6 +167,25 @@
 <!-- Call To Action -->
 <section style="background: var(--primary); padding: 4rem 0;">
     <div class="container text-center">
+        @auth
+        <h2 class="font-serif text-white mb-3" style="font-size: clamp(1.75rem, 4vw, 2.25rem);">Welcome back!</h2>
+        <p class="text-white mb-4" style="opacity: 0.9; max-width: 500px; margin-left: auto; margin-right: auto;">
+            Access your personalized healthcare dashboard to manage your medical journey.
+        </p>
+        @if(Auth::user()->role === 'patient')
+        <a href="{{ route('patient.dashboard') }}" class="btn-cta" style="background: white; color: var(--primary);">
+            Go to My Dashboard
+        </a>
+        @elseif(Auth::user()->role === 'doctor')
+        <a href="{{ route('doctor.dashboard') }}" class="btn-cta" style="background: white; color: var(--primary);">
+            Go to My Dashboard
+        </a>
+        @elseif(Auth::user()->role === 'admin')
+        <a href="{{ route('admin.dashboard') }}" class="btn-cta" style="background: white; color: var(--primary);">
+            Go to Admin Dashboard
+        </a>
+        @endif
+        @else
         <h2 class="font-serif text-white mb-3" style="font-size: clamp(1.75rem, 4vw, 2.25rem);">Ready to get started?</h2>
         <p class="text-white mb-4" style="opacity: 0.9; max-width: 500px; margin-left: auto; margin-right: auto;">
             Join thousands of patients who trust MediPlus for their healthcare management needs.
@@ -155,6 +193,7 @@
         <a href="{{ route('contact') }}" class="btn-cta" style="background: white; color: var(--primary);">
             Apply for Your Account
         </a>
+        @endauth
     </div>
 </section>
 

@@ -26,7 +26,7 @@
 @section('content')
 <!-- Stats -->
 <div class="row g-4 mb-4">
-    <div class="col-md-3">
+    <div class="col-12 col-sm-6 col-lg-3">
         <div class="stat-card">
             <div class="stat-icon" style="background: rgba(61, 139, 139, 0.1);">
                 <i data-lucide="calendar" style="color: var(--primary-teal);"></i>
@@ -37,7 +37,7 @@
             </div>
         </div>
     </div>
-    <div class="col-md-3">
+    <div class="col-12 col-sm-6 col-lg-3">
         <div class="stat-card">
             <div class="stat-icon" style="background: rgba(59, 130, 246, 0.1);">
                 <i data-lucide="clock" style="color: #3b82f6;"></i>
@@ -48,7 +48,7 @@
             </div>
         </div>
     </div>
-    <div class="col-md-3">
+    <div class="col-12 col-sm-6 col-lg-3">
         <div class="stat-card">
             <div class="stat-icon" style="background: rgba(34, 197, 94, 0.1);">
                 <i data-lucide="check-circle" style="color: #22c55e;"></i>
@@ -59,7 +59,7 @@
             </div>
         </div>
     </div>
-    <div class="col-md-3">
+    <div class="col-12 col-sm-6 col-lg-3">
         <div class="stat-card">
             <div class="stat-icon" style="background: rgba(239, 68, 68, 0.1);">
                 <i data-lucide="x-circle" style="color: #ef4444;"></i>

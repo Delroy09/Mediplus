@@ -53,8 +53,8 @@
             @csrf
             @method('PUT')
 
-            <div class="row">
-                <div class="col-md-6">
+            <div class="row mb-4">
+                <div class="col-md-6 mb-3">
                     <div class="form-group-v2">
                         <label class="form-label-v2" for="name">Full Name *</label>
                         <input type="text" class="form-control-v2" id="name" name="name" value="{{ old('name', $doctor->user->name ?? '') }}" required>
@@ -63,7 +63,7 @@
                         @enderror
                     </div>
                 </div>
-                <div class="col-md-6">
+                <div class="col-md-6 mb-3">
                     <div class="form-group-v2">
                         <label class="form-label-v2" for="email">Email Address *</label>
                         <input type="email" class="form-control-v2" id="email" name="email" value="{{ old('email', $doctor->user->email ?? '') }}" required>
@@ -74,17 +74,17 @@
                 </div>
             </div>
 
-            <div class="row">
-                <div class="col-md-6">
+            <div class="row mb-4">
+                <div class="col-md-6 mb-3">
                     <div class="form-group-v2">
                         <label class="form-label-v2" for="consultation_hours">Consultation Hours</label>
-                        <input type="text" class="form-control-v2" id="consultation_hours" name="consultation_hours" value="{{ old('consultation_hours', $doctor->consultation_hours ?? '') }}" placeholder="e.g., 9AM - 5PM">
+                        <input type="text" class="form-control-v2" id="consultation_hours" name="consultation_hours" value="{{ old('consultation_hours', $doctor->consultation_hours ?? '') }}" placeholder="e.g., Mon-Fri: 9AM - 5PM">
                         @error('consultation_hours')
                         <span class="text-danger" style="font-size: 0.875rem; color: #dc3545;">{{ $message }}</span>
                         @enderror
                     </div>
                 </div>
-                <div class="col-md-6">
+                <div class="col-md-6 mb-3">
                     <div class="form-group-v2">
                         <label class="form-label-v2" for="dob">Date of Birth</label>
                         <input type="date" class="form-control-v2" id="dob" name="dob" value="{{ old('dob', $doctor->dob ?? '') }}">
@@ -95,8 +95,8 @@
                 </div>
             </div>
 
-            <div class="row">
-                <div class="col-md-6">
+            <div class="row mb-4">
+                <div class="col-md-6 mb-3">
                     <div class="form-group-v2">
                         <label class="form-label-v2" for="specialization">Specialization *</label>
                         <input type="text" class="form-control-v2" id="specialization" name="specialization" value="{{ old('specialization', $doctor->specialization ?? '') }}" placeholder="e.g., Cardiology" required>
@@ -105,7 +105,7 @@
                         @enderror
                     </div>
                 </div>
-                <div class="col-md-6">
+                <div class="col-md-6 mb-3">
                     <div class="form-group-v2">
                         <label class="form-label-v2" for="department">Department</label>
                         <input type="text" class="form-control-v2" id="department" name="department" value="{{ old('department', $doctor->department ?? '') }}" placeholder="e.g., Internal Medicine">
@@ -116,8 +116,8 @@
                 </div>
             </div>
 
-            <div class="row">
-                <div class="col-md-6">
+            <div class="row mb-4">
+                <div class="col-md-6 mb-3">
                     <div class="form-group-v2">
                         <label class="form-label-v2" for="qualification">Qualification</label>
                         <input type="text" class="form-control-v2" id="qualification" name="qualification" value="{{ old('qualification', $doctor->qualification ?? '') }}" placeholder="e.g., MD, MBBS">
@@ -126,10 +126,10 @@
                         @enderror
                     </div>
                 </div>
-                <div class="col-md-6">
+                <div class="col-md-6 mb-3">
                     <div class="form-group-v2">
                         <label class="form-label-v2" for="experience">Experience (years)</label>
-                        <input type="number" class="form-control-v2" id="experience" name="experience" value="{{ old('experience', $doctor->experience ?? '') }}" placeholder="e.g., 10">
+                        <input type="number" class="form-control-v2" id="experience" name="experience" value="{{ old('experience', $doctor->years_of_experience ?? 0) }}" placeholder="e.g., 10" min="0">
                         @error('experience')
                         <span class="text-danger" style="font-size: 0.875rem; color: #dc3545;">{{ $message }}</span>
                         @enderror
@@ -137,7 +137,7 @@
                 </div>
             </div>
 
-            <div style="display: flex; gap: 1rem; margin-top: 1.5rem;">
+            <div style="display: flex; gap: 1rem; margin-top: 2rem; padding-top: 1.5rem; border-top: 1px solid var(--border-color);">
                 <button type="submit" class="btn-v2 btn-v2-primary">
                     Save Changes
                 </button>

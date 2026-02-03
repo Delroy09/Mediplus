@@ -458,10 +458,29 @@
                     <a href="{{ route('home') }}" class="nav-link">Home</a>
                     <a href="{{ route('home') }}#how-it-works" class="nav-link">How It Works</a>
                     <a href="{{ route('home') }}#features" class="nav-link">Features</a>
+                    @auth
+                    @if(Auth::user()->role === 'patient')
+                    <a href="{{ route('patient.dashboard') }}" class="btn-cta">
+                        <i data-lucide="layout-grid"></i>
+                        Dashboard
+                    </a>
+                    @elseif(Auth::user()->role === 'doctor')
+                    <a href="{{ route('doctor.dashboard') }}" class="btn-cta">
+                        <i data-lucide="layout-grid"></i>
+                        Dashboard
+                    </a>
+                    @elseif(Auth::user()->role === 'admin')
+                    <a href="{{ route('admin.dashboard') }}" class="btn-cta">
+                        <i data-lucide="layout-grid"></i>
+                        Dashboard
+                    </a>
+                    @endif
+                    @else
                     <a href="{{ route('contact') }}" class="btn-cta">
                         <i data-lucide="message-square"></i>
                         Request Account
                     </a>
+                    @endauth
                 </div>
 
                 <!-- Mobile Menu Toggle -->
@@ -476,7 +495,17 @@
                     <a href="{{ route('home') }}" class="nav-link">Home</a>
                     <a href="{{ route('home') }}#how-it-works" class="nav-link">How It Works</a>
                     <a href="{{ route('home') }}#features" class="nav-link">Features</a>
+                    @auth
+                    @if(Auth::user()->role === 'patient')
+                    <a href="{{ route('patient.dashboard') }}" class="btn-cta mt-2">Dashboard</a>
+                    @elseif(Auth::user()->role === 'doctor')
+                    <a href="{{ route('doctor.dashboard') }}" class="btn-cta mt-2">Dashboard</a>
+                    @elseif(Auth::user()->role === 'admin')
+                    <a href="{{ route('admin.dashboard') }}" class="btn-cta mt-2">Dashboard</a>
+                    @endif
+                    @else
                     <a href="{{ route('contact') }}" class="btn-cta mt-2">Request Account</a>
+                    @endauth
                 </div>
             </div>
         </div>

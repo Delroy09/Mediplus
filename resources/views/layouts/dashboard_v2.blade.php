@@ -480,6 +480,48 @@
             opacity: 0.5;
         }
 
+        /* Close Button */
+        .sidebar-close {
+            display: none;
+            position: absolute;
+            top: 1.5rem;
+            right: 1rem;
+            background: rgba(255, 255, 255, 0.1);
+            border: none;
+            color: white;
+            width: 32px;
+            height: 32px;
+            border-radius: 6px;
+            cursor: pointer;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+            z-index: 10;
+        }
+
+        .sidebar-close:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        /* Overlay */
+        .sidebar-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 999;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .sidebar-overlay.active {
+            display: block;
+            opacity: 1;
+        }
+
         /* Responsive */
         @media (max-width: 991px) {
             .sidebar-v2 {
@@ -489,6 +531,11 @@
 
             .sidebar-v2.open {
                 transform: translateX(0);
+                box-shadow: 4px 0 12px rgba(0, 0, 0, 0.15);
+            }
+
+            .sidebar-close {
+                display: flex;
             }
 
             .main-content-v2 {
@@ -498,6 +545,44 @@
             .mobile-toggle {
                 display: block !important;
             }
+
+            .content-area {
+                padding: 1rem;
+            }
+
+            .top-header {
+                padding: 1rem;
+            }
+
+            .page-title {
+                font-size: 1.1rem;
+            }
+
+            .info-row-v2 {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 0.25rem;
+            }
+
+            .info-row-v2 .label {
+                width: 100%;
+                font-size: 0.8rem;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .stat-card {
+                text-align: center;
+            }
+
+            .table-v2 {
+                font-size: 0.8rem;
+            }
+
+            .table-v2 thead th,
+            .table-v2 tbody td {
+                padding: 0.75rem 0.5rem;
+            }
         }
 
         .mobile-toggle {
@@ -505,6 +590,13 @@
             background: none;
             border: none;
             cursor: pointer;
+            padding: 0.5rem;
+        }
+
+        /* Table Wrapper for Horizontal Scroll */
+        .table-responsive-v2 {
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
         }
     </style>
     <script src="https://unpkg.com/lucide@latest"></script>
@@ -512,8 +604,14 @@
 </head>
 
 <body>
+    <!-- Overlay -->
+    <div class="sidebar-overlay" id="sidebarOverlay" onclick="closeSidebar()"></div>
+
     <!-- Sidebar -->
     <aside class="sidebar-v2" id="sidebar">
+        <button class="sidebar-close" onclick="closeSidebar()">
+            <i data-lucide="x" style="width: 20px; height: 20px;"></i>
+        </button>
         <div class="sidebar-brand">
             <a href="{{ route('home') }}">
                 <span class="brand-icon">+</span>
@@ -551,7 +649,7 @@
     <main class="main-content-v2">
         <header class="top-header">
             <div class="d-flex align-items-center gap-3">
-                <button class="mobile-toggle" onclick="document.getElementById('sidebar').classList.toggle('open')">
+                <button class="mobile-toggle" onclick="toggleSidebar()">
                     <i data-lucide="menu"></i>
                 </button>
                 <h1 class="page-title">@yield('page-title')</h1>
@@ -569,6 +667,31 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
     <script>
         lucide.createIcons();
+
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            const overlay = document.getElementById('sidebarOverlay');
+            sidebar.classList.toggle('open');
+            overlay.classList.toggle('active');
+        }
+
+        function closeSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            const overlay = document.getElementById('sidebarOverlay');
+            sidebar.classList.remove('open');
+            overlay.classList.remove('active');
+        }
+
+        // Close sidebar when clicking outside on mobile
+        document.addEventListener('click', function(event) {
+            const sidebar = document.getElementById('sidebar');
+            const toggle = document.querySelector('.mobile-toggle');
+            if (window.innerWidth <= 991 && sidebar.classList.contains('open')) {
+                if (!sidebar.contains(event.target) && !toggle.contains(event.target)) {
+                    closeSidebar();
+                }
+            }
+        });
     </script>
     @yield('scripts')
     @stack('scripts')

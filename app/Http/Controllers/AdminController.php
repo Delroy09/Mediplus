@@ -259,7 +259,7 @@ class AdminController extends Controller
                 'specialization' => $validated['specialization'],
                 'department' => $validated['department'],
                 'qualification' => $validated['qualification'],
-                'years_of_experience' => $validated['experience'],
+                'years_of_experience' => $validated['experience'] ?? 0,
                 'consultation_hours' => $validated['consultation_hours'],
             ]);
         });
